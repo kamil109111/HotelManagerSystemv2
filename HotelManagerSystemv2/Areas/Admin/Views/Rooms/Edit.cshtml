@@ -1,0 +1,62 @@
+﻿@model HotelManagerSystemv2.Areas.Admin.ViewModel.RoomViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Room</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Room.RoomNumber" class="control-label"></label>
+                <input asp-for="Room.RoomNumber" class="form-control" />
+                <span asp-validation-for="Room.RoomNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomImage" class="control-label"></label><br>
+                <input asp-for="RoomImage" />
+                <span asp-validation-for="RoomImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Room.RoomPrice" class="control-label"></label>
+                <input asp-for="Room.RoomPrice" class="form-control" />
+                <span asp-validation-for="Room.RoomPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Room.RoomCapacity" class="control-label"></label>
+                <input asp-for="Room.RoomCapacity" class="form-control" />
+                <span asp-validation-for="Room.RoomCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Room.RoomDescription" class="control-label"></label>
+                <input asp-for="Room.RoomDescription" class="form-control" />
+                <span asp-validation-for="Room.RoomDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Room.RoomStatusId)
+                @Html.DropDownListFor(m => m.Room.RoomStatusId, new SelectList(Model.RoomStatuses, "Id", "RoomStatusName"), "", new { @class = "form-control" })
+                <span asp-validation-for="Room.RoomStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <img src="~/Images/@Model.Room.RoomImage" width="400" height="300" asp-append-version="true" />
+    </div>
+
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

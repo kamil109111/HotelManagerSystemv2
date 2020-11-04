@@ -1,0 +1,44 @@
+﻿@model HotelManagerSystemv2.Areas.Admin.Models.Room
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Portfolio Item Heading -->
+    <h1 class="my-4">
+        Pokój nr:
+        <small>@Html.DisplayFor(model => model.RoomNumber)</small>
+    </h1>
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+        <div class="col-md-8">
+            <img class="img-fluid" src="~/Images/@Model.RoomImage">
+        </div>
+
+        <div class="col-md-4">
+            <h3 class="my-3">Opis: </h3>
+            <p>@Html.DisplayFor(model => model.RoomDescription)</p>
+            <h3 class="my-3">Szczegóły:</h3>
+            <ul>
+                <li>@Html.DisplayNameFor(model => model.RoomPrice):  @Html.DisplayFor(model => model.RoomPrice) </li>
+                <li>@Html.DisplayNameFor(model => model.RoomCapacity): @Html.DisplayFor(model => model.RoomCapacity) </li>
+            </ul>
+        </div>
+
+    </div>
+    <br />
+    <div>
+        <a asp-action="Offer">Back to List</a>
+    </div>
+
+
+
+</div>
+<!-- /.container -->
