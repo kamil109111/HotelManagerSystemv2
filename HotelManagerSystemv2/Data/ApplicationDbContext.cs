@@ -16,5 +16,11 @@ namespace HotelManagerSystemv2.Data
         }
         public DbSet<HotelManagerSystemv2.Areas.Admin.Models.Room> Room { get; set; }
         public DbSet<HotelManagerSystemv2.Areas.Admin.Models.RoomStatus> RoomStatus { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+     
+        }
     }
 }

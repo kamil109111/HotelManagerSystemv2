@@ -12,6 +12,7 @@ using HotelManagerSystemv2.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using HotelManagerSystemv2.Models;
 
 namespace HotelManagerSystemv2
 {
@@ -31,6 +32,11 @@ namespace HotelManagerSystemv2
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            
 
             services.AddControllersWithViews();
 
@@ -56,6 +62,7 @@ namespace HotelManagerSystemv2
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
