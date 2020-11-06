@@ -8,7 +8,7 @@ using HotelManagerSystemv2.Areas.Admin.Models;
 
 namespace HotelManagerSystemv2.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

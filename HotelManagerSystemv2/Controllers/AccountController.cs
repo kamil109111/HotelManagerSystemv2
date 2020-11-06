@@ -67,7 +67,8 @@ namespace HotelManagerSystemv2.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    FirstNameLastName = model.FirstNameLastName
                 };
                 
                 var result = await _userManager.CreateAsync(user, model.Password);

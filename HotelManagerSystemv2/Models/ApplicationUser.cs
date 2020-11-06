@@ -10,6 +10,6 @@ namespace HotelManagerSystemv2.Models
     {
         public string Address { get; set; }
         public string Photo { get; set; }
-        public string Login { get; set; }
+        public string FirstNameLastName { get; set; }
     }
 }

@@ -18,7 +18,10 @@ namespace HotelManagerSystemv2.ViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
-        [Compare("Password", ErrorMessage ="Password and confirmation do not match.")]
+        [Compare("Password", ErrorMessage = "Password and confirmation do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name ="Imię i Nazwisko")]
+        public string FirstNameLastName { get; set; }
     }
 }
