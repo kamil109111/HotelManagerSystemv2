@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HotelManagerSystemv2.Areas.Admin.ViewModel;
 using HotelManagerSystemv2.Models;
 using HotelManagerSystemv2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace HotelManagerSystemv2.Controllers
+namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+   
     public class AdministrationController : Controller
     {
 
@@ -19,6 +21,13 @@ namespace HotelManagerSystemv2.Controllers
         {
             _roleManager = roleManager;
             _userManager = userManager;
+        }
+
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
         }
 
         [HttpGet]

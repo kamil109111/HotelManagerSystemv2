@@ -10,10 +10,12 @@ using HotelManagerSystemv2.Data;
 using HotelManagerSystemv2.Areas.Admin.ViewModel;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
     public class RoomsController : Controller
     {
         private readonly ApplicationDbContext _context;

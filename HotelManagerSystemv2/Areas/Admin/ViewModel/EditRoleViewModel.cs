@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HotelManagerSystemv2.ViewModels
+namespace HotelManagerSystemv2.Areas.Admin.ViewModel
 {
     public class EditRoleViewModel
     {

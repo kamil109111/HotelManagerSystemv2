@@ -7,8 +7,9 @@ using HotelManagerSystemv2.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HotelManagerSystemv2.Controllers
+namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Employee\Data\" />
+    <Folder Include="Areas\Employee\Models\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
