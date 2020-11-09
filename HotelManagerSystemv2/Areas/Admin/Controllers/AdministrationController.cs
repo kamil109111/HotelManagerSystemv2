@@ -24,6 +24,34 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             _userManager = userManager;
         }
 
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {id} cannot be found";
+                return View("Error");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListUsers"); 
+            }
+        }
+
         [HttpGet]
         public IActionResult ListUsers()
         {
