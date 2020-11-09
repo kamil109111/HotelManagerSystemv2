@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using HotelManagerSystemv2.Models;
 using HotelManagerSystemv2.Areas.Admin.Models;
+using System.Linq;
 
 namespace HotelManagerSystemv2.Data
 {
@@ -20,6 +21,12 @@ namespace HotelManagerSystemv2.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            foreach (var foreignKey in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+                
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
      
         }
     }

@@ -19,10 +19,26 @@
             <div class="card-body">
                 <h5 class="card-title">@role.Name</h5>
             </div> 
-            <div class ="card-footer">
-                <a class="btn btn-primary" asp-action="EditRole"
-                   asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
-                <a href="#" class="btn btn-primary">Delete</a>
+            <div class="card-footer">              
+                <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
+                    <a class="btn btn-primary" asp-action="EditRole"
+                       asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
+
+                    @if (role.Name == "Administrator")
+                    {
+                        <button disabled type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete role : @role.Name')">
+                            Delete
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete role : @role.Name')">
+                            Delete
+                        </button>
+                    }
+
+                </form>
+
             </div>
         </div>
     }
