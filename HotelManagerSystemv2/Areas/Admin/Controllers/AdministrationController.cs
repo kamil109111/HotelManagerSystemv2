@@ -33,7 +33,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with id = {id} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
             else
             {
@@ -62,7 +62,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with id = {id} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
             else
             {
@@ -97,7 +97,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (user == null )
             {
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
 
             var userClaims = await _userManager.GetClaimsAsync(user);
@@ -124,7 +124,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
             else
             {
@@ -195,7 +195,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
 
             var model = new EditRoleViewModel
@@ -223,7 +223,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
             else
             {
@@ -255,7 +255,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
 
             var model = new List<UserRoleViewModel>();
@@ -293,7 +293,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
-                return View("Error");
+                return View("NotFound");
             }
 
             for(int i=0; i < model.Count; i++)
