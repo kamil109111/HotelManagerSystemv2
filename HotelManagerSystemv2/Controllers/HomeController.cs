@@ -12,12 +12,10 @@ using Microsoft.EntityFrameworkCore;
 namespace HotelManagerSystemv2.Controllers
 {
     public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+    {        
         private readonly ApplicationDbContext _context;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
-        {
-            _logger = logger;
+        public HomeController(ApplicationDbContext context)
+        {            
             _context = context;
         }
 
@@ -39,11 +37,13 @@ namespace HotelManagerSystemv2.Controllers
             return View();
         }
 
+        /*
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        */
 
         // GET: Admin/Rooms/Details/5
         public async Task<IActionResult> Details(int? id)

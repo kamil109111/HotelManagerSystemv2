@@ -1,9 +1,13 @@
 ﻿using HotelManagerSystemv2.Areas.Admin.ViewModel;
+using HotelManagerSystemv2.Controllers;
 using HotelManagerSystemv2.Models;
 using HotelManagerSystemv2.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,11 +21,14 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<ErrorController> _logger;
         public AdministrationController(RoleManager<IdentityRole> roleManager,
-                                        UserManager<ApplicationUser> userManager)
+                                        UserManager<ApplicationUser> userManager,
+                                        ILogger<ErrorController> logger)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -37,19 +44,31 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             }
             else
             {
-                var result = await _roleManager.DeleteAsync(role);
-
-                if (result.Succeeded)
+                try
                 {
-                    return RedirectToAction("ListRoles");
-                }
+                    var result = await _roleManager.DeleteAsync(role);
 
-                foreach (var error in result.Errors)
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ListRoles");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
+                    return View("ListRoles");
+                }
+                catch (DbUpdateException ex)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    _logger.LogError($"Error deleting role {ex}");
+                    ViewBag.ErrorTitle = $"{role.Name} role is in use";
+                    ViewBag.ErrorMessage = $"{role.Name} role cannot be deleted as ther are users" +
+                        $"in this role. If you want to delete this role, please remove the users from " +
+                        $"the role and then try to delete";
+                    return View("Error");
                 }
-
-                return View("ListRoles");
             }
         }
 
@@ -308,9 +327,9 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             {
                 var user = await _userManager.FindByIdAsync(model[i].UserId);
 
-                IdentityResult result = null;
+                IdentityResult result;
 
-                if(model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
+                if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
                 {
                     result = await _userManager.AddToRoleAsync(user, role.Name);
                 }
