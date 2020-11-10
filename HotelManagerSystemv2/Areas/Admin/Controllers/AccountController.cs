@@ -69,7 +69,8 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    FirstNameLastName = model.FirstNameLastName
+                    FirstNameLastName = model.FirstNameLastName,
+                    IsGuest = model.IsGuest
                 };
                 
                 var result = await _userManager.CreateAsync(user, model.Password);

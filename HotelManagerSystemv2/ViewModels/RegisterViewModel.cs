@@ -23,5 +23,7 @@ namespace HotelManagerSystemv2.ViewModels
 
         [Display(Name ="Imię i Nazwisko")]
         public string FirstNameLastName { get; set; }
+
+        public bool IsGuest { get; set; }
     }
 }

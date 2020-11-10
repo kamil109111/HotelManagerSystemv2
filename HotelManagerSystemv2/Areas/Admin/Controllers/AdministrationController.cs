@@ -90,6 +90,13 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListGuest()
+        {
+            var users = _userManager.Users.Where(i => i.IsGuest == true);
+            return View(users);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -260,12 +267,13 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             var model = new List<UserRoleViewModel>();
             {
-                foreach(var user in _userManager.Users)
+                foreach(var user in _userManager.Users.Where(i => i.IsGuest == false))
                 {
                     var userRoleViewModel = new UserRoleViewModel
                     {
                         UserId = user.Id,
-                        UserName = user.UserName
+                        UserName = user.UserName,
+                        IsGuest = user.IsGuest
                     };
 
                     if(await _userManager.IsInRoleAsync(user, role.Name))
