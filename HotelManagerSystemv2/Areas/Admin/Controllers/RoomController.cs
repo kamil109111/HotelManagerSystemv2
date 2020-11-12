@@ -158,7 +158,8 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
         }*/
 
         // GET: Admin/Rooms/Edit/5
-        public IActionResult Edit(int id)
+        [HttpGet]
+        public  IActionResult Edit(int id)
         {
             var room = _context.Room.SingleOrDefault(r => r.RoomId == id);
 
