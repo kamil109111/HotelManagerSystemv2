@@ -163,23 +163,24 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
         // GET: Admin/Rooms/Edit/5
         [HttpGet]
-        public  IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var room = _context.Room.SingleOrDefault(r => r.RoomId == id);
+            var room = await _context.Room.FindAsync(id);
 
             if (room == null)
-                return NotFound();
+            {
+                ViewBag.ErrorMessage = $"Room with Id = {id} cannot be found";
+                return View("NotFound");
+            }
 
             var viewModel = new RoomViewModel
             {
                 Room = room,
                 RoomStatuses = _context.RoomStatus.ToList(),
-                RoomTypes = _context.RoomType.ToList(),
-                
-
+                RoomTypes = _context.RoomType.ToList()              
             };
 
-            return View("Edit", viewModel);
+            return View(viewModel);
         }
 
 
@@ -202,14 +203,19 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
         // POST: Admin/Rooms/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, RoomViewModel roomvm)
+        [HttpPost]   
+        public async Task<IActionResult> Edit(int id, RoomViewModel roomvm)
         {
             string stringFilename = UploadFile(roomvm);
             var room = _context.Room.SingleOrDefault(r => r.RoomId == id);
-            {
 
+            if (room == null)
+            {
+                ViewBag.ErrorMessage = $"Room with Id = {room.RoomId} cannot be found";
+                return View("NotFound");
+            }
+
+            {
                 room.RoomNumber = roomvm.Room.RoomNumber;
                 room.RoomCapacity = roomvm.Room.RoomCapacity;
                 room.RoomDescription = roomvm.Room.RoomDescription;
@@ -228,7 +234,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                 try
                 {
                     _context.Update(room);
-                    _context.SaveChangesAsync();
+                  await  _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
