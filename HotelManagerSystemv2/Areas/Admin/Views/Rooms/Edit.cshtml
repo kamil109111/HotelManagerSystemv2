@@ -3,21 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<script src="~/Content/vendor/jquery/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-    });
 
-    function DisplayImage(result) {
-        if (result.files && result.files[0]) {
-            var fileReader = new FileReader();
-            fileReader.onload = function (e) {
-                $("#imgRoom").attr('src', e.target.result);
-            }
-            fileReader.readAsDataURL(result.files[0]);
-        }
-    }
-</script>
 <h1>Edit</h1>
 
 <h4>Room</h4>
@@ -32,8 +18,11 @@
                 <span asp-validation-for="Room.RoomNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RoomImage" class="control-label"></label><br>
-                <input asp-for="RoomImage" onchange="DisplayImage(this)" />
+                <label asp-for="RoomImage" class="control-label"></label>
+                <div class="custom-file">
+                    <input class="form-control custom-file-input" asp-for="RoomImage" onchange="DisplayImage(this)" />
+                    <label class="custom-file-label">Wybierz plik...</label>
+                </div>
                 <span asp-validation-for="RoomImage" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -67,9 +56,9 @@
         </form>
     </div>
     <div class="col-md-4">
-        <img id="imgRoom" src="~/Images/@Model.Room.RoomImage" width="400" height="300"/>
+        <img id="imgRoom" src="~/Images/@Model.Room.RoomImage" width="400" height="300" asp-append-version="true" />
     </div>
-    
+
 
 </div>
 
@@ -79,4 +68,28 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        function DisplayImage(result) {
+            if (result.files && result.files[0]) {
+                var fileReader = new FileReader();
+                fileReader.onload = function (e) {
+                    $("#imgRoom").attr('src', e.target.result);
+                }
+                fileReader.readAsDataURL(result.files[0]);
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
 }

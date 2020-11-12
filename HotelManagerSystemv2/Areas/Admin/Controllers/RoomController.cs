@@ -78,6 +78,10 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
         public IActionResult Create(RoomViewModel roomvm)
         {
             string stringFilename = UploadFile(roomvm);
+            if (UploadFile(roomvm) == null)
+            {
+                stringFilename = "No-image.png";
+            }
             var room = new Room
             {
 
