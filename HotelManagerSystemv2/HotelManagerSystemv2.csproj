@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20201104193622_InitialMigration.Designer.cs" />
     <Compile Remove="Migrations\20201104203150_Identity.cs" />
     <Compile Remove="Migrations\20201104203150_Identity.Designer.cs" />
+    <Compile Remove="Migrations\20201112130859_DodanieRoomTypeDoRoom.cs" />
+    <Compile Remove="Migrations\20201112130859_DodanieRoomTypeDoRoom.Designer.cs" />
+    <Compile Remove="Migrations\20201112131104_DodanieRoomTypeDoRoom.cs" />
+    <Compile Remove="Migrations\20201112131104_DodanieRoomTypeDoRoom.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

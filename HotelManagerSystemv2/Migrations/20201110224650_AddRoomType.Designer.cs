@@ -4,14 +4,16 @@ using HotelManagerSystemv2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelManagerSystemv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201110224650_AddRoomType")]
+    partial class AddRoomType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,14 +46,9 @@ namespace HotelManagerSystemv2.Migrations
                     b.Property<int>("RoomStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("RoomId");
 
                     b.HasIndex("RoomStatusId");
-
-                    b.HasIndex("RoomTypeId");
 
                     b.ToTable("Room");
                 });
@@ -73,78 +70,15 @@ namespace HotelManagerSystemv2.Migrations
 
             modelBuilder.Entity("HotelManagerSystemv2.Areas.Admin.Models.RoomType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RoomTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("AirConditioning")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Balcony")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Bath")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Bathrobes")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Bathroom")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Bidet")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Desk")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Fridge")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hairdryer")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Internet")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Iron")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Jacuzzi")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Kitchen")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Kitchenette")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Radio")
-                        .HasColumnType("bit");
-
                     b.Property<string>("RoomTypeName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Shower")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("TV")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Terrace")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Toilet")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Towels")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WashingMachine")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
+                    b.HasKey("RoomTypeId");
 
                     b.ToTable("RoomType");
                 });
@@ -362,12 +296,6 @@ namespace HotelManagerSystemv2.Migrations
                     b.HasOne("HotelManagerSystemv2.Areas.Admin.Models.RoomStatus", "RoomStatus")
                         .WithMany()
                         .HasForeignKey("RoomStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("HotelManagerSystemv2.Areas.Admin.Models.RoomType", "RoomType")
-                        .WithMany()
-                        .HasForeignKey("RoomTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

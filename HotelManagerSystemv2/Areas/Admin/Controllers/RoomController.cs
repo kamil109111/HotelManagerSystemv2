@@ -59,9 +59,11 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             //return View();
 
             var roomStatuses = _context.RoomStatus.ToList();
+            var roomTypes = _context.RoomType.ToList();
             var viewModel = new RoomViewModel
             {
-                RoomStatuses = roomStatuses
+                RoomStatuses = roomStatuses,
+                RoomTypes = roomTypes
             };
 
             return View(viewModel);
@@ -84,6 +86,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                 RoomDescription = roomvm.Room.RoomDescription,
                 RoomPrice = roomvm.Room.RoomPrice,
                 RoomStatusId = roomvm.Room.RoomStatusId,
+                RoomTypeId = roomvm.Room.RoomTypeId,
                 RoomImage = stringFilename
             };
             _context.Room.Add(room);
@@ -166,6 +169,8 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             {
                 Room = room,
                 RoomStatuses = _context.RoomStatus.ToList(),
+                RoomTypes = _context.RoomType.ToList(),
+                
 
             };
 
@@ -205,6 +210,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                 room.RoomDescription = roomvm.Room.RoomDescription;
                 room.RoomPrice = roomvm.Room.RoomPrice;
                 room.RoomStatusId = roomvm.Room.RoomStatusId;
+                room.RoomTypeId = roomvm.Room.RoomTypeId;
                 if (stringFilename != null)
                 {
                     room.RoomImage = stringFilename;
@@ -248,6 +254,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             var room = await _context.Room
                 .Include(r => r.RoomStatus)
+                .Include(r => r.RoomType)
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (room == null)
             {

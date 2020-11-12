@@ -15,5 +15,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Models
         public string RoomDescription { get; set; }
         public RoomStatus RoomStatus { get; set; }
         public int RoomStatusId { get; set; }
+        public RoomType RoomType { get; set; }
+        public int RoomTypeId { get; set; }
     }
 }

@@ -11,8 +11,8 @@
 
     <!-- Portfolio Item Heading -->
     <h1 class="my-4">
-        Pokój nr:
-        <small>@Html.DisplayFor(model => model.RoomNumber)</small>
+        Pokój 
+        <small>@Html.DisplayFor(model => model.RoomType.RoomTypeName) @Html.DisplayFor(model => model.RoomCapacity) os.</small>
     </h1>
 
     <!-- Portfolio Item Row -->
@@ -29,7 +29,102 @@
             <ul>
                 <li>@Html.DisplayNameFor(model => model.RoomPrice):  @Html.DisplayFor(model => model.RoomPrice) </li>
                 <li>@Html.DisplayNameFor(model => model.RoomCapacity): @Html.DisplayFor(model => model.RoomCapacity) </li>
+
             </ul>
+
+            <h5>Wyposażenie :</h5>
+
+            @if (Model.RoomType.Internet == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Internet)</span>
+            }
+            @if (Model.RoomType.TV == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.TV)</span>
+            }
+            @if (Model.RoomType.AirConditioning == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.AirConditioning)</span>
+            }
+            @if (Model.RoomType.Balcony == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Balcony)</span>
+            }
+            @if (Model.RoomType.Terrace == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Terrace)</span>
+            }
+            @if (Model.RoomType.Radio == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Radio)</span>
+            }
+            @if (Model.RoomType.Desk == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Desk)</span>
+            }
+            @if (Model.RoomType.Iron == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Iron)</span>
+            }
+            <br />
+            @if (Model.RoomType.Bathroom == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Bathroom)</span>
+            }
+            @if (Model.RoomType.Hairdryer == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Hairdryer)</span>
+            }
+            @if (Model.RoomType.Toilet == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Toilet)</span>
+            }
+            @if (Model.RoomType.Towels == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Towels)</span>
+            }
+            @if (Model.RoomType.Bathrobes == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Bathrobes)</span>
+            }
+
+            @if (Model.RoomType.Shower == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Shower)</span>
+            }
+            @if (Model.RoomType.Jacuzzi == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Jacuzzi)</span>
+            }
+            @if (Model.RoomType.Bath == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Bath)</span>
+            }
+            @if (Model.RoomType.Bidet == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Bidet)</span>
+            }
+            @if (Model.RoomType.WashingMachine == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.WashingMachine)</span>
+            }
+            <br />
+            @if (Model.RoomType.Kitchen == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Kitchen)</span>
+            }
+            @if (Model.RoomType.Kitchenette == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Kitchenette)</span>
+            }
+            @if (Model.RoomType.Fridge == true)
+            {
+                <span class="badge badge-light">@Html.DisplayNameFor(model => model.RoomType.Fridge)</span>
+            }
+
+           
+
+
         </div>
 
     </div>

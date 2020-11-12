@@ -55,6 +55,7 @@ namespace HotelManagerSystemv2.Controllers
 
             var room = await _context.Room
                 .Include(r => r.RoomStatus)
+                .Include(r => r.RoomType)
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (room == null)
             {

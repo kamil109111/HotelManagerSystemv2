@@ -1,0 +1,138 @@
+﻿@model HotelManagerSystemv2.Areas.Admin.Models.RoomType
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>RoomType</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoomTypeName" class="control-label"></label>
+                <input asp-for="RoomTypeName" class="form-control" />
+                <span asp-validation-for="RoomTypeName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Bathroom" /> @Html.DisplayNameFor(model => model.Bathroom)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Hairdryer" /> @Html.DisplayNameFor(model => model.Hairdryer)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Towels" /> @Html.DisplayNameFor(model => model.Towels)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Shower" /> @Html.DisplayNameFor(model => model.Shower)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Bath" /> @Html.DisplayNameFor(model => model.Bath)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Jacuzzi" /> @Html.DisplayNameFor(model => model.Jacuzzi)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Bidet" /> @Html.DisplayNameFor(model => model.Bidet)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Toilet" /> @Html.DisplayNameFor(model => model.Toilet)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TV" /> @Html.DisplayNameFor(model => model.TV)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="AirConditioning" /> @Html.DisplayNameFor(model => model.AirConditioning)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Desk" /> @Html.DisplayNameFor(model => model.Desk)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Bathrobes" /> @Html.DisplayNameFor(model => model.Bathrobes)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Terrace" /> @Html.DisplayNameFor(model => model.Terrace)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Balcony" /> @Html.DisplayNameFor(model => model.Balcony)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Fridge" /> @Html.DisplayNameFor(model => model.Fridge)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Kitchen" /> @Html.DisplayNameFor(model => model.Kitchen)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Kitchenette" /> @Html.DisplayNameFor(model => model.Kitchenette)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="WashingMachine" /> @Html.DisplayNameFor(model => model.WashingMachine)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Iron" /> @Html.DisplayNameFor(model => model.Iron)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Radio" /> @Html.DisplayNameFor(model => model.Radio)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Internet" /> @Html.DisplayNameFor(model => model.Internet)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
