@@ -4,14 +4,16 @@ using HotelManagerSystemv2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelManagerSystemv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201120165818_WypełnienieBookingStatus")]
+    partial class WypełnienieBookingStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,69 +149,6 @@ namespace HotelManagerSystemv2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RoomType");
-                });
-
-            modelBuilder.Entity("HotelManagerSystemv2.Areas.Employee.Models.Booking", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("AllPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("BookingStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Breakfast")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Deposit")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Dinner")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmployeeId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("FirstDay")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GuestId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("GuestId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("LastDay")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("NumberOfPeople")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReservationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalPrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingStatusId");
-
-                    b.HasIndex("EmployeeId1");
-
-                    b.HasIndex("GuestId1");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Booking");
                 });
 
             modelBuilder.Entity("HotelManagerSystemv2.Areas.Employee.Models.BookingStatus", b =>
@@ -446,31 +385,6 @@ namespace HotelManagerSystemv2.Migrations
                     b.HasOne("HotelManagerSystemv2.Areas.Admin.Models.RoomType", "RoomType")
                         .WithMany()
                         .HasForeignKey("RoomTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HotelManagerSystemv2.Areas.Employee.Models.Booking", b =>
-                {
-                    b.HasOne("HotelManagerSystemv2.Areas.Employee.Models.BookingStatus", "BookingStatus")
-                        .WithMany()
-                        .HasForeignKey("BookingStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("HotelManagerSystemv2.Models.ApplicationUser", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId1")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("HotelManagerSystemv2.Models.ApplicationUser", "Guest")
-                        .WithMany()
-                        .HasForeignKey("GuestId1")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("HotelManagerSystemv2.Areas.Admin.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

@@ -13,12 +13,13 @@
     <Compile Remove="Migrations\20201112130859_DodanieRoomTypeDoRoom.Designer.cs" />
     <Compile Remove="Migrations\20201112131104_DodanieRoomTypeDoRoom.cs" />
     <Compile Remove="Migrations\20201112131104_DodanieRoomTypeDoRoom.Designer.cs" />
+    <Compile Remove="Migrations\20201120173147_DodanieBooking.cs" />
+    <Compile Remove="Migrations\20201120173147_DodanieBooking.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Employee\Data\" />
-    <Folder Include="Areas\Employee\Models\" />
   </ItemGroup>
 
   <ItemGroup>
