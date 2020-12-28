@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using HotelManagerSystemv2.Areas.Admin.Models;
@@ -9,10 +10,12 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
 {
     public class Booking
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime FirstDay { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime LastDay { get; set; }
 
         public DateTime ReservationDate { get; set; }
@@ -27,19 +30,20 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
 
         public bool AllPaid { get; set; }
 
-        public int TotalPrice {get; set;}
+        public double TotalPrice {get; set;}
 
         public BookingStatus BookingStatus { get; set; }
         public int BookingStatusId { get; set; }
 
         public ApplicationUser Guest { get; set; }
-        public int GuestId { get; set; }
+        public string GuestId { get; set; }
 
         public ApplicationUser Employee { get; set; }
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         public Room Room { get; set; }
         public int RoomId { get; set; }
+        
 
     }
 }

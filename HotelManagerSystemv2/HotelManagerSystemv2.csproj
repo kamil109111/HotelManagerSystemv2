@@ -15,6 +15,16 @@
     <Compile Remove="Migrations\20201112131104_DodanieRoomTypeDoRoom.Designer.cs" />
     <Compile Remove="Migrations\20201120173147_DodanieBooking.cs" />
     <Compile Remove="Migrations\20201120173147_DodanieBooking.Designer.cs" />
+    <Compile Remove="Migrations\20201120173412_DodanieBooking.cs" />
+    <Compile Remove="Migrations\20201120173412_DodanieBooking.Designer.cs" />
+    <Compile Remove="Migrations\20201202230300_a.cs" />
+    <Compile Remove="Migrations\20201202230300_a.Designer.cs" />
+    <Compile Remove="Migrations\20201202235941_DodanieBooking.cs" />
+    <Compile Remove="Migrations\20201202235941_DodanieBooking.Designer.cs" />
+    <Compile Remove="Migrations\20201203002208_PoprawkaDodanieBooking.cs" />
+    <Compile Remove="Migrations\20201203002208_PoprawkaDodanieBooking.Designer.cs" />
+    <Compile Remove="Migrations\20201203002712_PoprawkaDodanieBooking.cs" />
+    <Compile Remove="Migrations\20201203002712_PoprawkaDodanieBooking.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="jQuery.Fullcalendar" Version="3.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />

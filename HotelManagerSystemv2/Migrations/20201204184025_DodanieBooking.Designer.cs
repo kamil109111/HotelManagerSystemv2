@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelManagerSystemv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201120173412_DodanieBooking")]
+    [Migration("20201204184025_DodanieBooking")]
     partial class DodanieBooking
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,8 +153,10 @@ namespace HotelManagerSystemv2.Migrations
 
             modelBuilder.Entity("HotelManagerSystemv2.Areas.Employee.Models.Booking", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("AllPaid")
                         .HasColumnType("bit");
@@ -171,19 +173,13 @@ namespace HotelManagerSystemv2.Migrations
                     b.Property<bool>("Dinner")
                         .HasColumnType("bit");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmployeeId1")
+                    b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("FirstDay")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GuestId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("GuestId1")
+                    b.Property<string>("GuestId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("LastDay")
@@ -205,9 +201,9 @@ namespace HotelManagerSystemv2.Migrations
 
                     b.HasIndex("BookingStatusId");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId");
 
-                    b.HasIndex("GuestId1");
+                    b.HasIndex("GuestId");
 
                     b.HasIndex("RoomId");
 
@@ -462,12 +458,12 @@ namespace HotelManagerSystemv2.Migrations
 
                     b.HasOne("HotelManagerSystemv2.Models.ApplicationUser", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId1")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HotelManagerSystemv2.Models.ApplicationUser", "Guest")
                         .WithMany()
-                        .HasForeignKey("GuestId1")
+                        .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HotelManagerSystemv2.Areas.Admin.Models.Room", "Room")

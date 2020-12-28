@@ -1,0 +1,171 @@
+﻿@model IEnumerable<HotelManagerSystemv2.Areas.Employee.Models.Booking>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>    
+    <a asp-action="SearchResult">Sprawdź dostępność pokojów</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingStatusId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Guest.FirstNameLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPeople)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.Room)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            @if (item.BookingStatusId == 1)
+            {
+                <tr style="background-color:#0094ff">
+                    <td>
+                        Nowa
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
+            @if (item.BookingStatusId == 2)
+            {
+                <tr style="background-color:#b6ff00">
+                    <td>
+                        Potwierdzona
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
+            @if (item.BookingStatusId == 3)
+            {
+                <tr style="background-color:#00ff21">
+                    <td>
+                        Zameldowany
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
+            @if (item.BookingStatusId == 4)
+            {
+                <tr style="background-color:#808080">
+                    <td>
+                        Wymeldowany
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

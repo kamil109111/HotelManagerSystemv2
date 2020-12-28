@@ -1,0 +1,105 @@
+﻿@model HotelManagerSystemv2.Areas.Employee.ViewModel.SearchRoomViewModel
+
+@{
+    ViewData["Title"] = "SearchResult";
+}
+
+<h1>Sprawdź dostępność pokojów</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SearchResult" method="get">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DateFrom" class="control-label"></label>
+                <input asp-for="DateFrom" class="form-control" />
+                <span asp-validation-for="DateFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTo" class="control-label"></label>
+                <input asp-for="DateTo" class="form-control" />
+                <span asp-validation-for="DateTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoOfPeople" class="control-label"></label>
+                <input asp-for="NoOfPeople" class="form-control" />
+                <span asp-validation-for="NoOfPeople" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Dinner" /> @Html.DisplayNameFor(model => model.Dinner)
+                </label>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Szukaj" class="btn btn-primary" />
+            </div>
+        </form>
+        <form>
+            <input type="hidden" asp-for="DateFrom" />
+            <input type="hidden" asp-for="DateTo" />
+            <input type="hidden" asp-for="NoOfPeople" />
+            <input type="hidden" asp-for="Dinner" />
+          
+
+            <div class="row">
+                @if (Model != null)
+                {
+
+                    <table class="table border-primary">
+                        <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                <th>
+                                </th>
+                                <th>
+                                    Numer
+                                </th>
+                                <th>
+                                    Typ
+                                </th>
+                                <th>
+                                    Cena
+                                </th>
+                                <th>
+                                    Max. osób
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Room)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Zarezerwuj" asp-action="Create" asp-controller="Bookings" class="btn btn-primary" asp-route-id="@item.RoomId" />
+                                        
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/@item.RoomImage" class=" rounded-circle" width="40" height="40" asp-append-version="true" />
+                                    </td>
+                                    <td>
+                                        Nr. @Html.DisplayFor(modelItem => item.RoomNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoomType.RoomTypeName)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoomPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoomCapacity)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                }
+
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -11,7 +11,8 @@ namespace HotelManagerSystemv2.Migrations
                 name: "Booking",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstDay = table.Column<DateTime>(nullable: false),
                     LastDay = table.Column<DateTime>(nullable: false),
                     ReservationDate = table.Column<DateTime>(nullable: false),
@@ -22,10 +23,8 @@ namespace HotelManagerSystemv2.Migrations
                     AllPaid = table.Column<bool>(nullable: false),
                     TotalPrice = table.Column<int>(nullable: false),
                     BookingStatusId = table.Column<int>(nullable: false),
-                    GuestId1 = table.Column<string>(nullable: true),
-                    GuestId = table.Column<int>(nullable: false),
-                    EmployeeId1 = table.Column<string>(nullable: true),
-                    EmployeeId = table.Column<int>(nullable: false),
+                    GuestId = table.Column<string>(nullable: true),
+                    EmployeeId = table.Column<string>(nullable: true),
                     RoomId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -38,14 +37,14 @@ namespace HotelManagerSystemv2.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Booking_AspNetUsers_EmployeeId1",
-                        column: x => x.EmployeeId1,
+                        name: "FK_Booking_AspNetUsers_EmployeeId",
+                        column: x => x.EmployeeId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Booking_AspNetUsers_GuestId1",
-                        column: x => x.GuestId1,
+                        name: "FK_Booking_AspNetUsers_GuestId",
+                        column: x => x.GuestId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -63,14 +62,14 @@ namespace HotelManagerSystemv2.Migrations
                 column: "BookingStatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_EmployeeId1",
+                name: "IX_Booking_EmployeeId",
                 table: "Booking",
-                column: "EmployeeId1");
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_GuestId1",
+                name: "IX_Booking_GuestId",
                 table: "Booking",
-                column: "GuestId1");
+                column: "GuestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Booking_RoomId",
