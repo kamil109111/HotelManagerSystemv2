@@ -59,9 +59,12 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         }
 
         // GET: Admin/Bookings 
-        public async Task<IActionResult> Index(string bookingStatus, string searchString)
+        public async Task<IActionResult> Index(string bookingStatus, string searchString, string arrivals, string departure)
         {
             ViewData["GetBookingDetails"] = searchString;
+            ViewData["Status"] = bookingStatus;
+            ViewData["Arrivals"] = arrivals;
+            ViewData["Departure"] = departure;
 
             IQueryable<string> bookingQuery = from m in _context.BookingStatus
                                               select m.BookingStatusName;
@@ -78,7 +81,17 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             if (!string.IsNullOrEmpty(bookingStatus))
             {
                 booking = booking.Where(x => x.BookingStatus.BookingStatusName == bookingStatus);
-            }            
+            }
+
+            if (!string.IsNullOrEmpty(arrivals))
+            {
+                booking = booking.Where(x => x.FirstDay.Date.ToString() == arrivals);
+            }
+
+            if (!string.IsNullOrEmpty(departure))
+            {
+                booking = booking.Where(x => x.LastDay.Date.ToString() == departure);
+            }
 
             return View(await booking.AsNoTracking().ToListAsync());
         }       

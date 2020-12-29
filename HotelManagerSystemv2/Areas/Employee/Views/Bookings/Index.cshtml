@@ -21,9 +21,18 @@
                 <option>Wymeldowany</option>          
         </select>
 
-        <input type="search" placeholder="Wpisz imię, nazwisko lub e-mail..." name="searchString" value="@ViewData["GetBookingDetails"]" style="width:500px">
+        <input type="search" placeholder="Wpisz imię, nazwisko lub e-mail..." name="searchString" value="@ViewData["GetBookingDetails"]" style="width:500px">  
         <input type="submit" value="Szukaj" /> |
         <a asp-action="Index">Wczytaj pełną listę rezerwacji</a>
+    </p>    
+</form>
+
+<form>
+    <p>
+        <input type="date" name="arrivals" value="@ViewData["Arrivals"]" />
+        <input type="submit" value="Sprawdź przyjazdy" /> |
+        <input type="date" name="departure" value="@ViewData["Departure"]" />
+        <input type="submit" value="Sprawdź wyjazdy" /> 
     </p>
 </form>
 
