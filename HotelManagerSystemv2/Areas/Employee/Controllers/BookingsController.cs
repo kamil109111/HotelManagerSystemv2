@@ -21,10 +21,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             _context = context;
         }
 
-        public IActionResult Calendar()
-        {
-            return View();
-        }
+       
 
         [HttpGet]
         public IActionResult SearchResult(SearchRoomViewModel vm)
@@ -61,12 +58,31 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             return View(vm);
         }
 
-        // GET: Admin/Bookings
-        public async Task<IActionResult> Index()
+        // GET: Admin/Bookings 
+        public async Task<IActionResult> Index(string bookingStatus, string searchString)
         {
-            var applicationDbContext = _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee).Include(b => b.Guest);
-            return View(await applicationDbContext.ToListAsync());
-        }
+            ViewData["GetBookingDetails"] = searchString;
+
+            IQueryable<string> bookingQuery = from m in _context.BookingStatus
+                                              select m.BookingStatusName;
+
+
+            var booking = from b in _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee).Include(b => b.Guest)
+                          select b;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                booking = booking.Where(s => s.Guest.FirstNameLastName.Contains(searchString) || s.Guest.Email.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(bookingStatus))
+            {
+                booking = booking.Where(x => x.BookingStatus.BookingStatusName == bookingStatus);
+            }            
+
+            return View(await booking.AsNoTracking().ToListAsync());
+        }       
+
 
         // GET: Admin/Bookings/Details/5
         public async Task<IActionResult> Details(int? id)

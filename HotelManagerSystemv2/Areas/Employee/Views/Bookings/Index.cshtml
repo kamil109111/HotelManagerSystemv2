@@ -6,9 +6,27 @@
 
 <h1>Index</h1>
 
-<p>    
+<p>
     <a asp-action="SearchResult">Sprawdź dostępność pokojów</a>
 </p>
+
+<form asp-area="Employee" asp-controller="Bookings" asp-action="Index" method="get">
+    <p>
+        <select name="bookingStatus">
+
+                <option selected disabled hidden>Wybierz status</option>
+                <option>Nowa</option>
+                <option>Potwierdzona</option>
+                <option>Zameldowany</option>
+                <option>Wymeldowany</option>          
+        </select>
+
+        <input type="search" placeholder="Wpisz imię, nazwisko lub e-mail..." name="searchString" value="@ViewData["GetBookingDetails"]" style="width:500px">
+        <input type="submit" value="Szukaj" /> |
+        <a asp-action="Index">Wczytaj pełną listę rezerwacji</a>
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -17,6 +35,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Guest.FirstNameLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Guest.Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstDay)
@@ -29,7 +50,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>            
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Room)
             </th>
@@ -41,12 +62,15 @@
 
             @if (item.BookingStatusId == 1)
             {
-                <tr style="background-color:#0094ff">
+                <tr style="background-color: #AED6F1">
                     <td>
                         Nowa
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.Email)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FirstDay)
@@ -59,7 +83,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalPrice)
-                    </td>                    
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
                     </td>
@@ -73,12 +97,15 @@
 
             @if (item.BookingStatusId == 2)
             {
-                <tr style="background-color:#b6ff00">
+                <tr style="background-color: #F9E79F">
                     <td>
                         Potwierdzona
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.Email)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FirstDay)
@@ -91,7 +118,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalPrice)
-                    </td>                    
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
                     </td>
@@ -105,12 +132,15 @@
 
             @if (item.BookingStatusId == 3)
             {
-                <tr style="background-color:#00ff21">
+                <tr style="background-color: #ABEBC6">
                     <td>
                         Zameldowany
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.Email)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FirstDay)
@@ -123,7 +153,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalPrice)
-                    </td>                    
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
                     </td>
@@ -137,12 +167,15 @@
 
             @if (item.BookingStatusId == 4)
             {
-                <tr style="background-color:#808080">
+                <tr style="background-color: #ABB2B9">
                     <td>
                         Wymeldowany
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Guest.FirstNameLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.Email)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FirstDay)
@@ -155,7 +188,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalPrice)
-                    </td>                    
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeName) nr. @Html.DisplayFor(modelItem => item.Room.RoomNumber)
                     </td>
