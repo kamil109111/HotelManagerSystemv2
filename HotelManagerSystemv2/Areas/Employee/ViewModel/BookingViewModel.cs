@@ -10,8 +10,7 @@ namespace HotelManagerSystemv2.Areas.Employee.ViewModel
 {
     public class BookingViewModel
     {
-        public IEnumerable<BookingStatus> BookingStatuses { get; set; }
-        public IEnumerable<ApplicationUser> Guests { get; set; }
+        public IEnumerable<BookingStatus> BookingStatuses { get; set; }        
         public IEnumerable<ApplicationUser> Employees { get; set; }
         public IEnumerable<Room> Rooms { get; set; }
         public Booking Booking { get; set; }       

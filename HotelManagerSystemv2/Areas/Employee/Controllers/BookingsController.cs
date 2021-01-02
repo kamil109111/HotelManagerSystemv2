@@ -70,12 +70,12 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                                               select m.BookingStatusName;
 
 
-            var booking = from b in _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee).Include(b => b.Guest)
+            var booking = from b in _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee)
                           select b;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                booking = booking.Where(s => s.Guest.FirstNameLastName.Contains(searchString) || s.Guest.Email.Contains(searchString));
+                booking = booking.Where(s => s.Name.Contains(searchString) || s.Email.Contains(searchString));
             }
 
             if (!string.IsNullOrEmpty(bookingStatus))
@@ -124,17 +124,19 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             var Room = _context.Room.Single(model => model.RoomId == id);
             var RoomPrice = Room.RoomPrice;
             var numberOfDays = DateTo.Subtract(DateFrom).TotalDays;
-            
 
-            Booking booking = new Booking();
-            booking.FirstDay = DateFrom;
-            booking.LastDay = DateTo;
-            booking.NumberOfPeople = NoOfPeople;
-            booking.RoomId = id;
-            booking.Dinner = Dinner;
-            
-            
-                     
+
+            Booking booking = new Booking
+            {
+                FirstDay = DateFrom,
+                LastDay = DateTo,
+                NumberOfPeople = NoOfPeople,
+                RoomId = id,
+                Dinner = Dinner
+            };
+
+
+
 
             if (Dinner == true)
             {
@@ -147,16 +149,13 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
            
 
 
-            var bookingStatuses = _context.BookingStatus.ToList();
-           // var room = _context.Room.Where(i => i.RoomId == id);           
+            var bookingStatuses = _context.BookingStatus.ToList();                     
             var employee = _context.Users.Where(i => i.IsGuest == false).ToList();
             var guest = _context.Users.Where(i => i.IsGuest == true).ToList();
             var viewModel = new BookingViewModel
             {
                 BookingStatuses = bookingStatuses,
-                Employees = employee,
-                Guests = guest,
-               // Rooms = room,
+                Employees = employee,                            
                 Booking = booking
             };
                return View(viewModel);
@@ -172,14 +171,15 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 FirstDay = bookingvm.Booking.FirstDay,
                 LastDay = bookingvm.Booking.LastDay,
                 ReservationDate = bookingvm.Booking.ReservationDate,
-                Breakfast = bookingvm.Booking.Breakfast,
+                Name = bookingvm.Booking.Name,
+                Phone = bookingvm.Booking.Phone,
+                Email = bookingvm.Booking.Email,
                 Dinner = bookingvm.Booking.Dinner,
                 NumberOfPeople = bookingvm.Booking.NumberOfPeople,
                 Deposit = bookingvm.Booking.Deposit,
                 AllPaid = bookingvm.Booking.AllPaid,
                 TotalPrice = bookingvm.Booking.TotalPrice,
-                BookingStatusId = bookingvm.Booking.BookingStatusId,
-                GuestId = bookingvm.Booking.GuestId,
+                BookingStatusId = bookingvm.Booking.BookingStatusId,                
                 EmployeeId = bookingvm.Booking.EmployeeId,
                 RoomId = bookingvm.Booking.RoomId
             };
@@ -236,7 +236,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,FirstDay,LastDay,ReservationDate,Breakfast,Dinner,NumberOfPeople,Deposit,AllPaid,TotalPrice,BookingStatusId,GuestId,EmployeeId,RoomId")] Booking booking)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,FirstDay,LastDay,ReservationDate,Name,Phone,Email,Dinner,NumberOfPeople,Deposit,AllPaid,TotalPrice,BookingStatusId,EmployeeId,RoomId")] Booking booking)
         {
             if (id != booking.Id)
             {

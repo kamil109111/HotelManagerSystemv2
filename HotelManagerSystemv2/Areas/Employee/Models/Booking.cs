@@ -20,7 +20,11 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
 
         public DateTime ReservationDate { get; set; }
 
-        public bool Breakfast { get; set; }
+        public string Name { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Email { get; set; }
 
         public bool Dinner { get; set; }
 
@@ -33,10 +37,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         public double TotalPrice {get; set;}
 
         public BookingStatus BookingStatus { get; set; }
-        public int BookingStatusId { get; set; }
-
-        public ApplicationUser Guest { get; set; }
-        public string GuestId { get; set; }
+        public int BookingStatusId { get; set; }     
 
         public ApplicationUser Employee { get; set; }
         public string EmployeeId { get; set; }
