@@ -13,17 +13,21 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         public int Id { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FirstDay { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime LastDay { get; set; }
 
         public DateTime ReservationDate { get; set; }
 
         public string Name { get; set; }
 
+        [Phone]
         public string Phone { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
 
         public bool Dinner { get; set; }
@@ -34,6 +38,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
 
         public bool AllPaid { get; set; }
 
+        [DataType(DataType.Currency)]
         public double TotalPrice {get; set;}
 
         public BookingStatus BookingStatus { get; set; }

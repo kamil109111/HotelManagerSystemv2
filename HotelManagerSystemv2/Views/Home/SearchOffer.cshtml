@@ -79,9 +79,17 @@
                     <div class="row">
                         @if (Model != null)
                         {
+                            
 
                             @foreach (var item in Model.Room)
                             {
+                                @if (item == null)
+                                {
+                                    <div class="col-md-4">
+                                        Brak wyników dla powyższych kryterów wyszukiwania
+                                    </div>
+                                }
+
                                 <div class="col-md-4">
                                     <div class="card mb-4 shadow-sm">
                                         <img src="~/Images/@item.RoomImage" class="card-img-top" height="225">
@@ -115,8 +123,7 @@
             <p class="float-right">
                 <a href="#">Back to top</a>
             </p>
-            <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-            <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="../getting-started/introduction/">getting started guide</a>.</p>
+           
         </div>
     </footer>
 

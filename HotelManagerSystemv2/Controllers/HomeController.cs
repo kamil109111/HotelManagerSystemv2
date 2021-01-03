@@ -28,6 +28,11 @@ namespace HotelManagerSystemv2.Controllers
             return View();
         }
 
+        public IActionResult Success()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Offer()
         {
             var applicationDbContext = _context.Room.Include(r => r.RoomStatus);
@@ -132,13 +137,14 @@ namespace HotelManagerSystemv2.Controllers
                 AllPaid = bookingvm.Booking.AllPaid,
                 TotalPrice = bookingvm.Booking.TotalPrice,
                 BookingStatusId = 1,
+                PaymentStatusId = 1,
                 EmployeeId = bookingvm.Booking.EmployeeId,
                 RoomId = bookingvm.Booking.RoomId
             };
             _context.Add(booking);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Success));
         }
 
         /*

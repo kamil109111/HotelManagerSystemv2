@@ -10,9 +10,11 @@ namespace HotelManagerSystemv2.Areas.Employee.ViewModel
     public class SearchRoomViewModel
     {
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateFrom { get; set; } = null;
 
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateTo { get; set; } = null;
         public int NoOfPeople { get; set; }
         public bool Dinner { get; set; }
