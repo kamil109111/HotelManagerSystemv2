@@ -12,12 +12,10 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
     {
         public int Id { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]        
         public DateTime FirstDay { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]        
         public DateTime LastDay { get; set; }
 
         public DateTime ReservationDate { get; set; }

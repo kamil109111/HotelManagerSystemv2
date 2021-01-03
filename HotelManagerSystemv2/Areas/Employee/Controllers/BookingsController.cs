@@ -192,35 +192,10 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
-        }
-
-        /*/ GET: Admin/Bookings/Create
-        public IActionResult Create()
-        {
-            ViewData["BookingStatusId"] = new SelectList(_context.BookingStatus, "Id", "Id");
-            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId");
-            return View();
-        }
-
-        // POST: Admin/Bookings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstDay,LastDay,ReservationDate,Breakfast,Dinner,NumberOfPeople,Deposit,AllPaid,TotalPrice,BookingStatusId,GuestId,EmployeeId,RoomId")] Booking booking)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BookingStatusId"] = new SelectList(_context.BookingStatus, "Id", "Id", booking.BookingStatus);
-            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.);
-            return View(booking);
-        }*/
+        }      
 
         // GET: Admin/Bookings/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var booking = await _context.Booking.FindAsync(id);
@@ -230,7 +205,9 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 ViewBag.ErrorMessage = $"Room with Id = {id} cannot be found";
                 return View("NotFound");
             }
-           
+
+            
+
             ViewData["BookingStatusId"] = new SelectList(_context.BookingStatus, "Id", "Id", booking.BookingStatusId);
             ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
             ViewData["PaymentStatusId"] = new SelectList(_context.PaymentStatus, "Id", "Id", booking.PaymentStatusId); 
@@ -242,7 +219,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,FirstDay,LastDay,ReservationDate,Name,Phone,Email,Dinner,NumberOfPeople,Deposit,AllPaid,TotalPrice,BookingStatusId,PaymentStatusId,EmployeeId,RoomId")] Booking booking)
+        public async Task<IActionResult> Edit(int? id, Booking booking)
         {
             if (id != booking.Id)
             {
@@ -266,8 +243,20 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 else if (booking.PaymentStatusId == 2)
                 {
                     booking.BookingStatusId = 2;
-                }                       
-                                 
+                }
+
+                var numberOfDays = booking.LastDay.Subtract(booking.FirstDay).TotalDays;
+                var room = await _context.Room.FindAsync(booking.RoomId);
+
+                if (booking.Dinner == true)
+                {
+                    booking.TotalPrice = (numberOfDays * room.RoomPrice) + ((booking.NumberOfPeople * 20) * numberOfDays);
+                }
+                else
+                {
+                    booking.TotalPrice = numberOfDays * room.RoomPrice;
+                }
+
                 try
                 {
                     _context.Update(booking);
@@ -291,6 +280,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             ViewData["PaymentStatusId"] = new SelectList(_context.PaymentStatus, "Id", "Id", booking.PaymentStatusId);
             return View(booking);
         }
+        
 
         // GET: Admin/Bookings/Delete/5
         public async Task<IActionResult> Delete(int? id)

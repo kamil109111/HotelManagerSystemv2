@@ -94,15 +94,16 @@
                                     <div class="card mb-4 shadow-sm">
                                         <img src="~/Images/@item.RoomImage" class="card-img-top" height="225">
                                         <div class="card-body">
-                                            <p class="card-text"> @Html.DisplayFor(modelItem => item.RoomDescription)</p>
-                                            <p class="card-text"> @Html.DisplayFor(modelItem => item.RoomCapacity)</p>
-                                            <p class="card-text"> @Html.DisplayFor(modelItem => item.RoomPrice)</p>
+                                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.RoomType.RoomTypeName) </h5>
+                                            <h4 class="card-subtitle"> @Html.DisplayFor(modelItem => item.RoomPrice) /za noc</h4>
+                                            <p class="card-text">Max. ilość osób: @Html.DisplayFor(modelItem => item.RoomCapacity)</p>
+
                                             <div class="d-flex justify-content-between align-items-center">
 
                                                 <a type="button" class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.RoomId">Szczegóły</a>
                                                 <input type="submit" value="Zarezerwuj" asp-action="CreateBooking" asp-controller="Home" class="btn btn-primary" asp-route-id="@item.RoomId" />
 
-                                                <small class="text-muted">9 mins</small>
+
                                             </div>
                                         </div>
                                     </div>
