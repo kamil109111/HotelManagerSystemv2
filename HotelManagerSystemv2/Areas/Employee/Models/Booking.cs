@@ -37,7 +37,10 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         public double TotalPrice {get; set;}
 
         public BookingStatus BookingStatus { get; set; }
-        public int BookingStatusId { get; set; }     
+        public int BookingStatusId { get; set; }
+
+        public PaymentStatus PaymentStatus { get; set; }
+        public int PaymentStatusId { get; set; }
 
         public ApplicationUser Employee { get; set; }
         public string EmployeeId { get; set; }

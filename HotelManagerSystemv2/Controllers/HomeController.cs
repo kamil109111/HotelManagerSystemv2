@@ -35,6 +35,41 @@ namespace HotelManagerSystemv2.Controllers
         }
 
         [HttpGet]
+        public IActionResult SearchOffer(SearchRoomViewModel vm)
+        {
+            if (vm.DateFrom == null || vm.DateTo == null)
+            {
+                return View();
+            }
+
+            if (vm.DateFrom >= vm.DateTo)
+            {
+                return View();
+            }
+
+            var roomsBooked = from b in _context.Booking
+                              where
+                              ((vm.DateFrom >= b.FirstDay) && (vm.DateFrom <= b.LastDay)) ||
+                              ((vm.DateTo >= b.FirstDay) && (vm.DateTo <= b.LastDay)) ||
+                              ((vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay) && (vm.DateTo <= b.LastDay)) ||
+                              ((vm.DateFrom >= b.LastDay) && (vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay)) ||
+                              ((vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay))
+                              select b;
+
+            var availableRooms = _context.Room.Where(r => !roomsBooked.Any(b => b.RoomId == r.RoomId))
+                .Include(x => x.RoomType).ToList();
+
+            foreach (var item in availableRooms)
+            {
+                if (item.RoomCapacity >= vm.NoOfPeople)
+                {
+                    vm.Room.Add(item);
+                }
+            }
+            return View(vm);
+        }
+
+        [HttpGet]
         public IActionResult CreateBooking(int id, DateTime DateFrom, DateTime DateTo, int NoOfPeople, bool Dinner)
         {
 
@@ -80,7 +115,7 @@ namespace HotelManagerSystemv2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateBoooking(BookingViewModel bookingvm)
+        public IActionResult CreateBooking(BookingViewModel bookingvm)
         {
             var booking = new Booking
             {
@@ -96,7 +131,7 @@ namespace HotelManagerSystemv2.Controllers
                 Deposit = bookingvm.Booking.Deposit,
                 AllPaid = bookingvm.Booking.AllPaid,
                 TotalPrice = bookingvm.Booking.TotalPrice,
-                BookingStatusId = bookingvm.Booking.BookingStatusId,
+                BookingStatusId = 1,
                 EmployeeId = bookingvm.Booking.EmployeeId,
                 RoomId = bookingvm.Booking.RoomId
             };
@@ -104,11 +139,6 @@ namespace HotelManagerSystemv2.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         /*

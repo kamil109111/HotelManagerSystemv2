@@ -66,11 +66,11 @@
                 <input asp-for="Booking.TotalPrice" class="form-control" />
                 <span asp-validation-for="Booking.TotalPrice" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(m => m.Booking.BookingStatusId)
                 @Html.DropDownListFor(m => m.Booking.BookingStatusId, new SelectList(Model.BookingStatuses, "Id", "BookingStatusName"), "Wybierz status", new { @class = "form-control" })
                 <span asp-validation-for="Booking.BookingStatusId" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Booking.RoomId" class="control-label"></label>
                 <input asp-for="Booking.RoomId" class="form-control" />

@@ -1,7 +1,8 @@
-﻿@model Tuple<HotelManagerSystemv2.Areas.Employee.ViewModel.BookingViewModel, HotelManagerSystemv2.Areas.Employee.Models.Guest>
+﻿@model HotelManagerSystemv2.Areas.Employee.ViewModel.BookingViewModel
+@inject SignInManager<ApplicationUser> signInManager;
 
 @{
-    ViewData["Title"] = "CreateBooking";
+    ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
@@ -10,90 +11,82 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateBooking" >
+        <form asp-action="CreateBooking">
+            <div class="form-group">
+                <label asp-for="Booking.Name" class="control-label"></label>
+                <input asp-for="Booking.Name" class="form-control" />
+                <span asp-validation-for="Booking.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.Phone" class="control-label"></label>
+                <input asp-for="Booking.Phone" class="form-control" />
+                <span asp-validation-for="Booking.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.Email" class="control-label"></label>
+                <input asp-for="Booking.Email" class="form-control" />
+                <span asp-validation-for="Booking.Email" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
-                <label asp-for="Item2.FirstNameLastName" class="control-label"></label>
-                <input asp-for="Item2.FirstNameLastName" class="form-control" />
-                <span asp-validation-for="Item2.FirstNameLastName" class="text-danger"></span>
+                <label asp-for="Booking.FirstDay" class="control-label"></label>
+                <input asp-for="Booking.FirstDay" class="form-control" />
+                <span asp-validation-for="Booking.FirstDay" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Item2.Phone" class="control-label"></label>
-                <input asp-for="Item2.Phone" class="form-control" />
-                <span asp-validation-for="Item2.Phone" class="text-danger"></span>
+                <label asp-for="Booking.LastDay" class="control-label"></label>
+                <input asp-for="Booking.LastDay" class="form-control" />
+                <span asp-validation-for="Booking.LastDay" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Item2.Email" class="control-label"></label>
-                <input asp-for="Item2.Email" class="form-control" />
-                <span asp-validation-for="Item2.Email" class="text-danger"></span>
-            </div>
-
-
-
-            <div class="form-group">
-                <label asp-for="Item1.Booking.FirstDay" class="control-label"></label>
-                <input asp-for="Item1.Booking.FirstDay" class="form-control" />
-                <span asp-validation-for="Item1.Booking.FirstDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item1.Booking.LastDay" class="control-label"></label>
-                <input asp-for="Item1.Booking.LastDay" class="form-control" />
-                <span asp-validation-for="Item1.Booking.LastDay" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="@Model.Item1.Booking.ReservationDate" value="@DateTime.Now" />
+            <input type="hidden" asp-for="@Model.Booking.ReservationDate" value="@DateTime.Now" />
+            <input type="hidden" asp-for="@Model.Booking.EmployeeId" value="@Model.Booking.EmployeeId" />
 
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Item1.Booking.Breakfast" /> @Html.DisplayNameFor(model => model.Item1.Booking.Breakfast)
+                    <input class="form-check-input" asp-for="Booking.Dinner" /> @Html.DisplayNameFor(model => model.Booking.Dinner)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.NumberOfPeople" class="control-label"></label>
+                <input asp-for="Booking.NumberOfPeople" class="form-control" />
+                <span asp-validation-for="Booking.NumberOfPeople" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Booking.Deposit" /> @Html.DisplayNameFor(model => model.Booking.Deposit)
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Item1.Booking.Dinner" /> @Html.DisplayNameFor(model => model.Item1.Booking.Dinner)
+                    <input class="form-check-input" asp-for="Booking.AllPaid" /> @Html.DisplayNameFor(model => model.Booking.AllPaid)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Item1.Booking.NumberOfPeople" class="control-label"></label>
-                <input asp-for="Item1.Booking.NumberOfPeople" class="form-control" />
-                <span asp-validation-for="Item1.Booking.NumberOfPeople" class="text-danger"></span>
+                <label asp-for="Booking.TotalPrice" class="control-label"></label>
+                <input asp-for="Booking.TotalPrice" class="form-control" />
+                <span asp-validation-for="Booking.TotalPrice" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Item1.Booking.Deposit" /> @Html.DisplayNameFor(model => model.Item1.Booking.Deposit)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Item1.Booking.AllPaid" /> @Html.DisplayNameFor(model => model.Item1.Booking.AllPaid)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item1.Booking.TotalPrice" class="control-label"></label>
-                <input asp-for="Item1.Booking.TotalPrice" class="form-control" />
-                <span asp-validation-for="Item1.Booking.TotalPrice" class="text-danger"></span>
-            </div>
-
-            <input type="hidden" asp-for="@Model.Item1.Booking.BookingStatusId" value="1" />
-            <input type="hidden" asp-for="@Model.Item1.Booking.GuestId"/>
-
             @*<div class="form-group">
-                @Html.LabelFor(m => m.Item1.Booking.GuestId)
-                @Html.DropDownListFor(m => m.Item1.Booking.GuestId, new SelectList(Model.Item1.Guests, "Id", "FirstNameLastName"), "Wybierz gościa", new { @class = "form-control" })
-                <span asp-validation-for="Item1.Booking.GuestId" class="text-danger"></span>
+                @Html.LabelFor(m => m.Booking.BookingStatusId)
+                @Html.DropDownListFor(m => m.Booking.BookingStatusId, new SelectList(Model.BookingStatuses, "Id", "BookingStatusName"), "Wybierz status", new { @class = "form-control" })
+                <span asp-validation-for="Booking.BookingStatusId" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="Item1.Booking.RoomId" class="control-label"></label>
-                <input asp-for="Item1.Booking.RoomId" class="form-control" />
-                <span asp-validation-for="Item1.Booking.RoomId" class="text-danger"></span>
+                <label asp-for="Booking.RoomId" class="control-label"></label>
+                <input asp-for="Booking.RoomId" class="form-control" />
+                <span asp-validation-for="Booking.RoomId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-</div>
+    </div>
 </div>
 
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

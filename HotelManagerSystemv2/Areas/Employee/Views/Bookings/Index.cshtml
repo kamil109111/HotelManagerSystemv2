@@ -14,17 +14,26 @@
     <p>
         <select name="bookingStatus">
 
-                <option selected disabled hidden>Wybierz status</option>
-                <option>Nowa</option>
-                <option>Potwierdzona</option>
-                <option>Zameldowany</option>
-                <option>Wymeldowany</option>          
+            <option selected disabled hidden>Wybierz status rezerwacji</option>
+            <option>Nowa</option>
+            <option>Potwierdzona</option>
+            <option>Zameldowany</option>
+            <option>Wymeldowany</option>
         </select>
 
-        <input type="search" placeholder="Wpisz imię, nazwisko lub e-mail..." name="searchString" value="@ViewData["GetBookingDetails"]" style="width:500px">  
+        <select name="paymentStatus">
+
+            <option selected disabled hidden>Wybierz status opłaty</option>
+            <option>Nieopłacono</option>
+            <option>Opłacono zaliczkę</option>
+            <option>Opłacono</option>
+
+        </select>
+
+        <input type="search" placeholder="Wpisz imię, nazwisko lub e-mail..." name="searchString" value="@ViewData["GetBookingDetails"]" style="width:500px">
         <input type="submit" value="Szukaj" /> |
         <a asp-action="Index">Wczytaj pełną listę rezerwacji</a>
-    </p>    
+    </p>
 </form>
 
 <form>
@@ -32,7 +41,7 @@
         <input type="date" name="arrivals" value="@ViewData["Arrivals"]" />
         <input type="submit" value="Sprawdź przyjazdy" /> |
         <input type="date" name="departure" value="@ViewData["Departure"]" />
-        <input type="submit" value="Sprawdź wyjazdy" /> 
+        <input type="submit" value="Sprawdź wyjazdy" />
     </p>
 </form>
 
@@ -41,6 +50,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.BookingStatusId)
+            </th>
+            <th>
+                Status opłaty
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -75,6 +87,29 @@
                     <td>
                         Nowa
                     </td>
+
+                    @if (item.PaymentStatusId == 3)
+                    {
+                        <td style="background-color: #CCFFE5">
+
+                            Opłacono
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 2)
+                    {
+                        <td style="background-color: #F9E79F">
+                            Opłacono zaliczkę
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 1)
+                    {
+                        <td style="background-color: #FF9999">
+                            Nieopłacono
+                        </td>
+                    }
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -110,6 +145,28 @@
                     <td>
                         Potwierdzona
                     </td>
+
+                    @if (item.PaymentStatusId == 3)
+                    {
+                        <td style="background-color: #CCFFE5">
+
+                            Opłacono
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 2)
+                    {
+                        <td style="background-color: #F9E79F">
+                            Opłacono zaliczkę
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 1)
+                    {
+                        <td style="background-color: #FF9999">
+                            Nieopłacono
+                        </td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -145,6 +202,28 @@
                     <td>
                         Zameldowany
                     </td>
+
+                    @if (item.PaymentStatusId == 3)
+                    {
+                        <td style="background-color: #CCFFE5">
+
+                            Opłacono
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 2)
+                    {
+                        <td style="background-color: #F9E79F">
+                            Opłacono zaliczkę
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 1)
+                    {
+                        <td style="background-color: #FF9999">
+                            Nieopłacono
+                        </td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -180,6 +259,28 @@
                     <td>
                         Wymeldowany
                     </td>
+
+                    @if (item.PaymentStatusId == 3)
+                    {
+                        <td style="background-color: #CCFFE5">
+
+                            Opłacono
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 2)
+                    {
+                        <td style="background-color: #F9E79F">
+                            Opłacono zaliczkę
+                        </td>
+
+                    }
+                    @if (item.PaymentStatusId == 1)
+                    {
+                        <td style="background-color: #FF9999">
+                            Nieopłacono
+                        </td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>

@@ -4,14 +4,16 @@ using HotelManagerSystemv2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelManagerSystemv2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210103172449_DodaniePaymentStatus")]
+    partial class DodaniePaymentStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,9 +188,6 @@ namespace HotelManagerSystemv2.Migrations
                     b.Property<int>("NumberOfPeople")
                         .HasColumnType("int");
 
-                    b.Property<int>("PaymentStatusId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
@@ -206,8 +205,6 @@ namespace HotelManagerSystemv2.Migrations
                     b.HasIndex("BookingStatusId");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("PaymentStatusId");
 
                     b.HasIndex("RoomId");
 
@@ -479,12 +476,6 @@ namespace HotelManagerSystemv2.Migrations
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("HotelManagerSystemv2.Areas.Employee.Models.PaymentStatus", "PaymentStatus")
-                        .WithMany()
-                        .HasForeignKey("PaymentStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
 
                     b.HasOne("HotelManagerSystemv2.Areas.Admin.Models.Room", "Room")
                         .WithMany()

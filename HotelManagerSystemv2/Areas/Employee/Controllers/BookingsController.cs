@@ -59,7 +59,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         }
 
         // GET: Admin/Bookings 
-        public async Task<IActionResult> Index(string bookingStatus, string searchString, string arrivals, string departure)
+        public async Task<IActionResult> Index(string bookingStatus, string paymentStatus, string searchString, string arrivals, string departure)
         {
             ViewData["GetBookingDetails"] = searchString;
             ViewData["Status"] = bookingStatus;
@@ -81,6 +81,10 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             if (!string.IsNullOrEmpty(bookingStatus))
             {
                 booking = booking.Where(x => x.BookingStatus.BookingStatusName == bookingStatus);
+            }
+            if (!string.IsNullOrEmpty(paymentStatus))
+            {
+                booking = booking.Where(x => x.PaymentStatus.PaymentStatusName == paymentStatus);
             }
 
             if (!string.IsNullOrEmpty(arrivals))
@@ -179,7 +183,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 Deposit = bookingvm.Booking.Deposit,
                 AllPaid = bookingvm.Booking.AllPaid,
                 TotalPrice = bookingvm.Booking.TotalPrice,
-                BookingStatusId = bookingvm.Booking.BookingStatusId,                
+                BookingStatusId = 1,
+                PaymentStatusId = 1,
                 EmployeeId = bookingvm.Booking.EmployeeId,
                 RoomId = bookingvm.Booking.RoomId
             };
@@ -228,6 +233,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
            
             ViewData["BookingStatusId"] = new SelectList(_context.BookingStatus, "Id", "Id", booking.BookingStatusId);
             ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
+            ViewData["PaymentStatusId"] = new SelectList(_context.PaymentStatus, "Id", "Id", booking.PaymentStatusId); 
             return View(booking);
         }
 
@@ -236,7 +242,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,FirstDay,LastDay,ReservationDate,Name,Phone,Email,Dinner,NumberOfPeople,Deposit,AllPaid,TotalPrice,BookingStatusId,EmployeeId,RoomId")] Booking booking)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,FirstDay,LastDay,ReservationDate,Name,Phone,Email,Dinner,NumberOfPeople,Deposit,AllPaid,TotalPrice,BookingStatusId,PaymentStatusId,EmployeeId,RoomId")] Booking booking)
         {
             if (id != booking.Id)
             {
@@ -245,6 +251,23 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             if (ModelState.IsValid)
             {
+
+                
+                if (booking.BookingStatusId == 4 && booking.PaymentStatusId == 2)
+                {
+                    booking.BookingStatusId = 4;
+                }
+
+                else if (booking.BookingStatusId == 3 && booking.PaymentStatusId == 2)
+                {
+                    booking.BookingStatusId = 3;
+                }
+
+                else if (booking.PaymentStatusId == 2)
+                {
+                    booking.BookingStatusId = 2;
+                }                       
+                                 
                 try
                 {
                     _context.Update(booking);
@@ -265,6 +288,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             }
             ViewData["BookingStatusId"] = new SelectList(_context.BookingStatus, "Id", "Id", booking.BookingStatusId);
             ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
+            ViewData["PaymentStatusId"] = new SelectList(_context.PaymentStatus, "Id", "Id", booking.PaymentStatusId);
             return View(booking);
         }
 

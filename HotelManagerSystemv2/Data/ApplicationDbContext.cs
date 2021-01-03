@@ -20,7 +20,7 @@ namespace HotelManagerSystemv2.Data
         public DbSet<HotelManagerSystemv2.Areas.Admin.Models.RoomType> RoomType { get; set; }
         public DbSet<HotelManagerSystemv2.Areas.Employee.Models.Booking> Booking { get; set; }
         public DbSet<HotelManagerSystemv2.Areas.Employee.Models.BookingStatus> BookingStatus { get; set; }
-
+        public DbSet<HotelManagerSystemv2.Areas.Employee.Models.PaymentStatus> PaymentStatus { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
