@@ -70,7 +70,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                                               select m.BookingStatusName;
 
 
-            var booking = from b in _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee)
+            var booking = from b in _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee).Include(b => b.PaymentStatus)
                           select b;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -124,11 +124,9 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         [HttpGet]
         public IActionResult Create(int id, DateTime DateFrom, DateTime DateTo, int NoOfPeople, bool Dinner)
         {
-
             var Room = _context.Room.Single(model => model.RoomId == id);
             var RoomPrice = Room.RoomPrice;
             var numberOfDays = DateTo.Subtract(DateFrom).TotalDays;
-
 
             Booking booking = new Booking
             {
@@ -139,9 +137,6 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 Dinner = Dinner
             };
 
-
-
-
             if (Dinner == true)
             {
                 booking.TotalPrice = (numberOfDays * RoomPrice) + ((NoOfPeople*20)*numberOfDays); 
@@ -149,9 +144,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             else
             {
                 booking.TotalPrice = numberOfDays * RoomPrice;
-            }
-           
-
+            }         
 
             var bookingStatuses = _context.BookingStatus.ToList();                     
             var employee = _context.Users.Where(i => i.IsGuest == false).ToList();
@@ -170,8 +163,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         public IActionResult Create(BookingViewModel bookingvm)
         {
             var booking = new Booking
-            {
-                //Id = 1 + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year ,
+            {                
                 FirstDay = bookingvm.Booking.FirstDay,
                 LastDay = bookingvm.Booking.LastDay,
                 ReservationDate = bookingvm.Booking.ReservationDate,
@@ -206,65 +198,69 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 return View("NotFound");
             }
 
+            var bookingStatuses = _context.BookingStatus.ToList();
+            var paymentStatuses = _context.PaymentStatus.ToList();
+            var rooms = _context.Room.ToList();
+
+            var viewModel = new BookingViewModel
+            {                
+                Booking = booking,
+                BookingStatuses = bookingStatuses,
+                PaymentStatuses = paymentStatuses,
+                Rooms = rooms
+            };
             
 
-            ViewData["BookingStatusId"] = new SelectList(_context.BookingStatus, "Id", "Id", booking.BookingStatusId);
-            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
-            ViewData["PaymentStatusId"] = new SelectList(_context.PaymentStatus, "Id", "Id", booking.PaymentStatusId); 
-            return View(booking);
+            return View(viewModel);
         }
 
-        // POST: Admin/Bookings/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Admin/Bookings/Edit/5        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, Booking booking)
+        public async Task<IActionResult> Edit(int? id, BookingViewModel vm)
         {
-            if (id != booking.Id)
+            if (id != vm.Booking.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
-            {
-
-                
-                if (booking.BookingStatusId == 4 && booking.PaymentStatusId == 2)
+            {                
+                if (vm.Booking.BookingStatusId == 4 && vm.Booking.PaymentStatusId == 2)
                 {
-                    booking.BookingStatusId = 4;
+                    vm.Booking.BookingStatusId = 4;
                 }
 
-                else if (booking.BookingStatusId == 3 && booking.PaymentStatusId == 2)
+                else if (vm.Booking.BookingStatusId == 3 && vm.Booking.PaymentStatusId == 2)
                 {
-                    booking.BookingStatusId = 3;
+                    vm.Booking.BookingStatusId = 3;
                 }
 
-                else if (booking.PaymentStatusId == 2)
+                else if (vm.Booking.PaymentStatusId == 2)
                 {
-                    booking.BookingStatusId = 2;
+                    vm.Booking.BookingStatusId = 2;
                 }
 
-                var numberOfDays = booking.LastDay.Subtract(booking.FirstDay).TotalDays;
-                var room = await _context.Room.FindAsync(booking.RoomId);
+                var numberOfDays = vm.Booking.LastDay.Subtract(vm.Booking.FirstDay).TotalDays;
+                var room = await _context.Room.FindAsync(vm.Booking.RoomId);
 
-                if (booking.Dinner == true)
+                if (vm.Booking.Dinner == true)
                 {
-                    booking.TotalPrice = (numberOfDays * room.RoomPrice) + ((booking.NumberOfPeople * 20) * numberOfDays);
+                    vm.Booking.TotalPrice = (numberOfDays * room.RoomPrice) + ((vm.Booking.NumberOfPeople * 20) * numberOfDays);
                 }
                 else
                 {
-                    booking.TotalPrice = numberOfDays * room.RoomPrice;
+                    vm.Booking.TotalPrice = numberOfDays * room.RoomPrice;
                 }
 
                 try
                 {
-                    _context.Update(booking);
+                    _context.Update(vm.Booking);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookingExists(booking.Id))
+                    if (!BookingExists(vm.Booking.Id))
                     {
                         return NotFound();
                     }
@@ -275,10 +271,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookingStatusId"] = new SelectList(_context.BookingStatus, "Id", "Id", booking.BookingStatusId);
-            ViewData["RoomId"] = new SelectList(_context.Room, "RoomId", "RoomId", booking.RoomId);
-            ViewData["PaymentStatusId"] = new SelectList(_context.PaymentStatus, "Id", "Id", booking.PaymentStatusId);
-            return View(booking);
+           
+            return View(vm);
         }
         
 
@@ -312,7 +306,6 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool BookingExists(int id)
         {
             return _context.Booking.Any(e => e.Id == id);

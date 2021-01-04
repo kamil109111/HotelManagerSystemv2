@@ -1,4 +1,4 @@
-﻿@model HotelManagerSystemv2.Areas.Employee.Models.Booking
+﻿@model HotelManagerSystemv2.Areas.Employee.ViewModel.BookingViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,82 +12,62 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Booking.Id" />
             <div class="form-group">
-                <label asp-for="FirstDay" class="control-label"></label>
-                <input asp-for="FirstDay"  class="form-control" />
-                <span asp-validation-for="FirstDay" class="text-danger"></span>
+                <label class="control-label">Imię i Nazwisko:</label>
+                <input asp-for="Booking.Name" class="form-control" />
+                <span asp-validation-for="Booking.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastDay" class="control-label"></label>
-                <input asp-for="LastDay" class="form-control" />
-                <span asp-validation-for="LastDay" class="text-danger"></span>
+                <label class="control-label">Telefon: </label>
+                <input asp-for="Booking.Phone" class="form-control" />
+                <span asp-validation-for="Booking.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReservationDate" class="control-label"></label>
-                <input asp-for="ReservationDate" class="form-control" />
-                <span asp-validation-for="ReservationDate" class="text-danger"></span>
+                <label class="control-label">E-mail:</label>
+                <input asp-for="Booking.Email" class="form-control" />
+                <span asp-validation-for="Booking.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Data początkowa</label>
+                <input asp-for="Booking.FirstDay" class="form-control" />
+                <span asp-validation-for="Booking.FirstDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Data końcowa</label>
+                <input asp-for="Booking.LastDay" class="form-control" />
+                <span asp-validation-for="Booking.LastDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Data rezerwacji</label>
+                <input asp-for="Booking.ReservationDate" class="form-control" />
+                <span asp-validation-for="Booking.ReservationDate" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Dinner" /> @Html.DisplayNameFor(model => model.Dinner)
+                    <input class="form-check-input" asp-for="Booking.Dinner" /> Obiadokolcja
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="NumberOfPeople" class="control-label"></label>
-                <input asp-for="NumberOfPeople" class="form-control" />
-                <span asp-validation-for="NumberOfPeople" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Deposit" /> @Html.DisplayNameFor(model => model.Deposit)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="AllPaid" /> @Html.DisplayNameFor(model => model.AllPaid)
-                </label>
+                <label class="control-label">Ilość osób</label>
+                <input asp-for="Booking.NumberOfPeople" class="form-control" />
+                <span asp-validation-for="Booking.NumberOfPeople" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                <label class="control-label">Status rezerwacji</label>
+                @Html.DropDownListFor(m => m.Booking.BookingStatusId, new SelectList(Model.BookingStatuses, "Id", "BookingStatusName"), new { @class = "form-control" })
+                <span asp-validation-for="Booking.BookingStatusId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TotalPrice" class="control-label"></label>
-                <input asp-for="TotalPrice" class="form-control" />
-                <span asp-validation-for="TotalPrice" class="text-danger"></span>
+                <label class="control-label">Status płatności</label>
+                @Html.DropDownListFor(m => m.Booking.PaymentStatusId, new SelectList(Model.PaymentStatuses, "Id", "PaymentStatusName"), new { @class = "form-control" })
+                <span asp-validation-for="Booking.BookingStatusId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BookingStatusId" class="control-label"></label>
-                <select asp-for="BookingStatusId" class="form-control" asp-items="ViewBag.BookingStatusId"></select>
-                <span asp-validation-for="BookingStatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PaymentStatusId" class="control-label"></label>
-                <select asp-for="PaymentStatusId" class="form-control" asp-items="ViewBag.PaymentStatusId"></select>
-                <span asp-validation-for="PaymentStatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label"></label>
-                <input asp-for="EmployeeId" class="form-control" />
-                <span asp-validation-for="EmployeeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoomId" class="control-label"></label>
-                <select asp-for="RoomId" class="form-control" asp-items="ViewBag.RoomId"></select>
-                <span asp-validation-for="RoomId" class="text-danger"></span>
-            </div>
+               <label class="control-label">Pokój</label>
+                @Html.DropDownListFor(m => m.Booking.RoomId, new SelectList(Model.Rooms, "RoomId", "RoomNumber"), new { @class = "form-control" })
+                <span asp-validation-for="Booking.RoomId" class="text-danger"></span>
+            </div>           
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
