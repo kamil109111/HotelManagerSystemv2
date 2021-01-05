@@ -107,7 +107,7 @@ namespace HotelManagerSystemv2.Controllers
 
         public async Task<IActionResult> Offer()
         {
-            var applicationDbContext = _context.Room.Include(r => r.RoomStatus);
+            var applicationDbContext = _context.Room.Include(r => r.RoomStatus).Include(r => r.RoomType);
             return View(await applicationDbContext.ToListAsync());
         }
 

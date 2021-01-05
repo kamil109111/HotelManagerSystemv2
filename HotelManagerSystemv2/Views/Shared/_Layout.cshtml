@@ -1,13 +1,15 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager;
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HotelSystemManager</title>
     <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+    <link href="~/Content/css/album.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -91,15 +93,18 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="bottom:auto" >
         <div class="container">
             &copy; 2020 - HotelSystemManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    
+
     <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="~/Content/vendor/jquery/jquery.slim.min.js')</script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

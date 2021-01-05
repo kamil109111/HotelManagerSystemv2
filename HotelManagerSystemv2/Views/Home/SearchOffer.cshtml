@@ -16,8 +16,11 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
 
+
     <!-- Bootstrap core CSS -->
     <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
         .bd-placeholder-img {
@@ -38,35 +41,38 @@
     <main role="main">
 
         <div class="jumbotron text-center">
-            
-                <form asp-action="SearchOffer" method="get">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="DateFrom" class="control-label"></label>
-                        <input asp-for="DateFrom" class="form-control" />
-                        <span asp-validation-for="DateFrom" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DateTo" class="control-label"></label>
-                        <input asp-for="DateTo" class="form-control " />
-                        <span asp-validation-for="DateTo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="NoOfPeople" class="control-label"></label>
-                        <input asp-for="NoOfPeople" class="form-control" />
-                        <span asp-validation-for="NoOfPeople" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="Dinner" /> @Html.DisplayNameFor(model => model.Dinner)
-                        </label>
-                    </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Szukaj" class="btn btn-primary" />
-                    </div>
-                </form>
-            
+            <form asp-action="SearchOffer" method="get">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Data początkowa</label>
+                    <input asp-for="DateFrom" class="form-control" />
+                    <span asp-validation-for="DateFrom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Data końcowa</label>
+                    <input asp-for="DateTo" class="form-control " />
+                    <span asp-validation-for="DateTo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Ilość osób</label>
+                    <input asp-for="NoOfPeople" class="form-control" />
+                    <span asp-validation-for="NoOfPeople" class="text-danger"></span>
+                </div>              
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="custom-checkbox" asp-for="Dinner" /> @Html.DisplayName("Dodatkowe wyżywienie")
+                    </label>
+                    <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Zapytanie dotyczy obiadokolacji,
+                          która jest opcjonalna i kosztuje 20 zł za każdą osobę/dziennie. Śniadanie jest dla wszystkich gości i nie jest dodatkowo płatne">help_outline</span>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Szukaj" class="btn btn-primary" />
+                </div>
+            </form>
+
         </div>
 
         <div class="album py-5 bg-light">
@@ -79,7 +85,7 @@
                     <div class="row">
                         @if (Model != null)
                         {
-                            
+
 
                             @foreach (var item in Model.Room)
                             {
@@ -96,6 +102,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">@Html.DisplayFor(modelItem => item.RoomType.RoomTypeName) </h5>
                                             <h4 class="card-subtitle"> @Html.DisplayFor(modelItem => item.RoomPrice) /za noc</h4>
+                                            <h6 class="small">Cena nie zawiera dodatkowego wyżywienia</h6>
                                             <p class="card-text">Max. ilość osób: @Html.DisplayFor(modelItem => item.RoomCapacity)</p>
 
                                             <div class="d-flex justify-content-between align-items-center">
@@ -108,8 +115,8 @@
                                         </div>
                                     </div>
                                 </div>
-                             }
-                         }
+                            }
+                        }
                     </div>
                 </form>
 
@@ -124,13 +131,16 @@
             <p class="float-right">
                 <a href="#">Back to top</a>
             </p>
-           
+
         </div>
     </footer>
 
+    <script src="../wwwroot/js/site.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="~/Content/vendor/jquery/jquery.slim.min.js')</script>
     <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+
 
 </body>
 </html>
