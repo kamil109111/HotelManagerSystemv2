@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HotelManagerSystemv2.Areas.Employee.Models;
 using HotelManagerSystemv2.Data;
 using HotelManagerSystemv2.Areas.Employee.ViewModel;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace HotelManagerSystemv2.Areas.Employee.Controllers
 {
@@ -19,6 +21,74 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         public BookingsController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SendEmailAsync(int id)
+        {
+
+            var booking = await _context.Booking.FindAsync(id);
+
+            if (booking == null)
+            {
+                ViewBag.ErrorMessage = $"Booking with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var numberOfDays = booking.LastDay.Subtract(booking.FirstDay).TotalDays;
+            var room = _context.Room.Single(model => model.RoomId == booking.RoomId);
+
+
+
+            string dinner;
+            
+            if (booking.Dinner == true)
+            {
+                 dinner = "śniadanie + obiadokolacja";
+            }
+            else
+            {
+                 dinner = "śniadanie";
+            }
+
+            string text = new String("Witaj " + booking.Name + ",\n\n" +
+                "Serdecznie dziękujemy za wybór naszego hotelu." +
+                "Mamy przyjemność potwierdzić następującą rezerwację: \n\n" +
+                "Szczegóły rezerwacji: " +
+                "\nImię i nazwisko: " + booking.Name +
+                "\nTwoja rezerwacja: noclegów: " + numberOfDays + ", osób: " + booking.NumberOfPeople +
+                "\nPrzyjazd: " + booking.FirstDay.ToShortDateString() + " (od 15:00)" +
+                "\nWyjazd: " + booking.LastDay.ToShortDateString() + " (do 11:00)" +
+                "\nWyżywienie: " + dinner +
+                "\nPokój: " + "Nr." + room.RoomNumber +
+                "\nCena za pobyt: " + booking.TotalPrice.ToString("C") +
+                "\n\nW celu potwierdzenia rezerwacji proszę o wpłatę bezzwrotnego zadatku w kwocie " + (booking.TotalPrice * 0.4).ToString("C") +
+                " w ciągu 6 dni (do " + booking.ReservationDate.AddDays(6).ToShortDateString() + ") na nasze konto." +
+                "\n\nDane do wpłaty na konto: 11 1111 1111 1111 1111 1111 1111" +
+                "\nTytuł wpłaty: " + booking.Name + " rez. nr" + booking.Id);
+            
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("HotelSystemManager", "ttest69777@gmail.com"));
+            message.To.Add(new MailboxAddress(booking.Name, booking.Email));
+            message.Subject = "HotelSystemManager - Rezerwacja pobytu";
+
+            var builder = new BodyBuilder
+            {
+                TextBody = text
+            };
+
+            message.Body = builder.ToMessageBody();
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("ttest69777@gmail.com", "Qwerty12345!");
+                client.Send(message);
+
+                client.Disconnect(true);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
        
