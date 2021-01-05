@@ -16,6 +16,9 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Booking.Id" />
+            <input type="hidden" asp-for="Booking.Deposit" value="@Model.Booking.Deposit" />
+            <input type="hidden" asp-for="Booking.AllPaid" value="@Model.Booking.AllPaid" />
+
             <div class="form-group">
                 <label class="control-label">Imię i Nazwisko:</label>
                 <input asp-for="Booking.Name" class="form-control" />

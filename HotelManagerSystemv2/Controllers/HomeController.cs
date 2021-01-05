@@ -68,6 +68,7 @@ namespace HotelManagerSystemv2.Controllers
                 "Serdecznie dziękujemy za wybór naszego hotelu." +
                 " Mamy przyjemność potwierdzić następującą rezerwację: \n\n" +
                 "Szczegóły rezerwacji: \n" +
+                "\nNumer rezerwacji: " + booking.Id +
                 "\nImię i nazwisko: " + booking.Name +
                 "\nTwoja rezerwacja: noclegów: " + numberOfDays + ", osób: " + booking.NumberOfPeople +
                 "\nPrzyjazd: " + booking.FirstDay.ToShortDateString() + " (od 15:00)" +
@@ -204,8 +205,8 @@ namespace HotelManagerSystemv2.Controllers
                 Email = bookingvm.Booking.Email,
                 Dinner = bookingvm.Booking.Dinner,
                 NumberOfPeople = bookingvm.Booking.NumberOfPeople,
-                Deposit = bookingvm.Booking.Deposit,
-                AllPaid = bookingvm.Booking.AllPaid,
+                Deposit = false,
+                AllPaid = false,
                 TotalPrice = bookingvm.Booking.TotalPrice,
                 BookingStatusId = 1,
                 PaymentStatusId = 1,
