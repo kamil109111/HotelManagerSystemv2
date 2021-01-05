@@ -24,7 +24,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SendEmailAsync(int id)
+        public async Task<IActionResult> SendEmail(int id)
         {
 
             var booking = await _context.Booking.FindAsync(id);
@@ -53,8 +53,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             string text = new String("Witaj " + booking.Name + ",\n\n" +
                 "Serdecznie dziękujemy za wybór naszego hotelu." +
-                "Mamy przyjemność potwierdzić następującą rezerwację: \n\n" +
-                "Szczegóły rezerwacji: " +
+                " Mamy przyjemność potwierdzić następującą rezerwację: \n\n" +
+                "Szczegóły rezerwacji: \n" +
                 "\nImię i nazwisko: " + booking.Name +
                 "\nTwoja rezerwacja: noclegów: " + numberOfDays + ", osób: " + booking.NumberOfPeople +
                 "\nPrzyjazd: " + booking.FirstDay.ToShortDateString() + " (od 15:00)" +
@@ -65,7 +65,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 "\n\nW celu potwierdzenia rezerwacji proszę o wpłatę bezzwrotnego zadatku w kwocie " + (booking.TotalPrice * 0.4).ToString("C") +
                 " w ciągu 6 dni (do " + booking.ReservationDate.AddDays(6).ToShortDateString() + ") na nasze konto." +
                 "\n\nDane do wpłaty na konto: 11 1111 1111 1111 1111 1111 1111" +
-                "\nTytuł wpłaty: " + booking.Name + " rez. nr" + booking.Id);
+                "\nTytuł wpłaty: " + booking.Name + " rez. nr: " + booking.Id);
             
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("HotelSystemManager", "ttest69777@gmail.com"));
@@ -253,7 +253,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             _context.Add(booking);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(SendEmail));
         }      
 
         // GET: Admin/Bookings/Edit/5
