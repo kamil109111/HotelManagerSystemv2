@@ -83,7 +83,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                booking = booking.Where(s => s.Name.Contains(searchString) || s.Email.Contains(searchString));
+                booking = booking.Where(s => s.Name.Contains(searchString) || s.Email.Equals(searchString) || s.Id.ToString().Equals(searchString));
             }
 
             if (!string.IsNullOrEmpty(bookingStatus))

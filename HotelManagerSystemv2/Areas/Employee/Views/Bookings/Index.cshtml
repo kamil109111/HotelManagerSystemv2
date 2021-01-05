@@ -30,9 +30,9 @@
 
         </select>
 
-        <input type="search" placeholder="Wpisz imię, nazwisko lub e-mail..." name="searchString" value="@ViewData["GetBookingDetails"]" style="width:500px">
+        <input type="search" placeholder="Wpisz nr. rezerwacji, imię, nazwisko lub e-mail..." name="searchString" value="@ViewData["GetBookingDetails"]" style="width:500px">
         <input type="submit" value="Szukaj" /> |
-        <a asp-action="Index">Wczytaj pełną listę rezerwacji</a>
+        <a asp-action="Index">Wyczyść filtry wyszukiwania</a>
     </p>
 </form>
 
@@ -48,6 +48,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Nr. rez.
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingStatusId)
             </th>
@@ -81,9 +84,13 @@
         @foreach (var item in Model)
         {
 
+
             @if (item.BookingStatusId == 1)
             {
                 <tr style="background-color: #AED6F1">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
                     <td>
                         Nowa
                     </td>
@@ -143,6 +150,9 @@
             {
                 <tr style="background-color: #F9E79F">
                     <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
                         Potwierdzona
                     </td>
 
@@ -200,6 +210,9 @@
             {
                 <tr style="background-color: #ABEBC6">
                     <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
                         Zameldowany
                     </td>
 
@@ -256,6 +269,9 @@
             @if (item.BookingStatusId == 4)
             {
                 <tr style="background-color: #ABB2B9">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
                     <td>
                         Wymeldowany
                     </td>
