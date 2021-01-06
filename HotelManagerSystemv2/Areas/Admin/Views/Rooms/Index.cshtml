@@ -7,28 +7,23 @@
 <h1>Pokoje</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Dodaj nowy pokój</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RoomNumber)
+                Nr. pokoju
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoomImage)
+                Zdjęcie
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoomPrice)
+                Cena
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoomCapacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoomDescription)
-            </th>
-
-            <th></th>
+                Max. ilość osób
+            </th>          
         </tr>
     </thead>
     <tbody>
@@ -42,18 +37,15 @@
                     <img src="~/Images/@item.RoomImage" class=" rounded-circle" width="40" height="40" asp-append-version="true" />
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RoomPrice)
+                    @Html.DisplayFor(modelItem => item.RoomPrice)/ za noc
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RoomCapacity)
-                </td>
+                </td>                
                 <td>
-                    @Html.DisplayFor(modelItem => item.RoomDescription)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.RoomId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.RoomId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.RoomId">Edycja</a> |
+                    <a asp-action="Details" asp-route-id="@item.RoomId">Szczegóły</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RoomId">Usuń</a>
                 </td>
             </tr>
         }

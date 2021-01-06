@@ -11,23 +11,23 @@
         <form asp-action="SearchResult" method="get">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="DateFrom" class="control-label"></label>
+                <label class="control-label">Data przyjazdu</label>
                 <input asp-for="DateFrom" class="form-control" />
                 <span asp-validation-for="DateFrom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateTo" class="control-label"></label>
+                <label class="control-label">Data wyjazdu</label>
                 <input asp-for="DateTo" class="form-control" />
                 <span asp-validation-for="DateTo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NoOfPeople" class="control-label"></label>
+                <label class="control-label">Ilość osób</label>
                 <input asp-for="NoOfPeople" class="form-control" />
                 <span asp-validation-for="NoOfPeople" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Dinner" /> @Html.DisplayNameFor(model => model.Dinner)
+                    <input class="form-check-input" asp-for="Dinner" /> Dodatkowe wyżywienie
                 </label>
             </div>
 

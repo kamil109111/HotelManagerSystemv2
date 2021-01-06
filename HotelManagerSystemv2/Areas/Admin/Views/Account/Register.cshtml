@@ -1,33 +1,33 @@
 ﻿@model HotelManagerSystemv2.ViewModels.RegisterViewModel
 
-<h1>User Registration</h1>
+<h1>Rejestracja nowego użytkownika</h1>
 
 <div class="row">
     <div class="col-12">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="@Model.FirstNameLastName"></label>
+                <label>Imię i nazwisko</label>
                 <input asp-for="@Model.FirstNameLastName" class="form-control" />
                 <span asp-validation-for="@Model.FirstNameLastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Email"></label>
+                <label>E-mail</label>
                 <input asp-for="@Model.Email" class="form-control" />
                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Password"></label>
+                <label>Hasło</label>
                 <input asp-for="@Model.Password" class="form-control" />
                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.ConfirmPassword"></label>
+                <label>Potwierdź hasło</label>
                 <input asp-for="@Model.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="@Model.IsGuest" value="false" />
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Potwierdź</button>
         </form>
     </div>
 </div>

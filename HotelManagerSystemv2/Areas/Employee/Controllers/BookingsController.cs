@@ -119,6 +119,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             var booking = await _context.Booking
                 .Include(b => b.BookingStatus)
+                .Include(b => b.PaymentStatus)
                 .Include(b => b.Room)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (booking == null)

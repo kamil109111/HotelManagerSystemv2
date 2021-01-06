@@ -4,100 +4,89 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Szczegóły</h1>
 
 <div>
-    <h4>Booking</h4>
+    <h4>Rezerwacja</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstDay)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FirstDay)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LastDay)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LastDay)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ReservationDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ReservationDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Dinner)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Dinner)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfPeople)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfPeople)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Deposit)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Deposit)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AllPaid)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AllPaid)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TotalPrice)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookingStatus)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookingStatus.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EmployeeId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EmployeeId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Imię i nazwisko:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
+            Telefon:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Phone)
         </dd>
-
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            E-mail:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Room)
+            Przyjazd:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Room.RoomId)
+            @Html.DisplayFor(model => model.FirstDay)
         </dd>
+        <dt class="col-sm-2">
+            Wyjazd:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastDay)
+        </dd>
+        <dt class="col-sm-2">
+            Data rezerwacji:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ReservationDate)
+        </dd>
+        <dt class="col-sm-2">
+            Dodatkowe wyżywienie:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Dinner)
+        </dd>
+        <dt class="col-sm-2">
+            Ilość osób:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfPeople)
+        </dd>
+
+        <dt class="col-sm-2">
+            Nr. pokoju:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Room.RoomNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Status rezerwacji:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookingStatus.BookingStatusName)
+        </dd>
+        <dt class="col-sm-2">
+            Status płatności:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PaymentStatus.PaymentStatusName)
+        </dd>
+        <dt class="col-sm-2">
+            Suma:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edycja</a> |
+    <a asp-action="Index">Powrót do grafiku</a>
 </div>

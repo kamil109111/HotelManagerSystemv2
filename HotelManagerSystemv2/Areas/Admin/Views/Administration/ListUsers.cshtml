@@ -4,31 +4,25 @@
     ViewBag.Title = "All Users";
 }
 
-<h1>All Users</h1>
+<h1>Użytkownicy</h1>
 
 @if (Model.Any())
 {
-    <a class="btn btn-primary" style="width:auto" asp-controller="Account" asp-action="Register">
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zM13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-        </svg>  Add new user
-    </a><br>
+    <a class="btn btn-primary" style="width: auto; margin-bottom: 20px;" asp-controller="Account" asp-action="Register">Dodaj nowego użytkownika</a>
+<br>
 
     foreach (var user in Model.Where(i => i.IsGuest == false))
     {
         <div class="card mb-3">
-            <div class="card-header">
-                User Id: @user.Id
+            <div class="card-header">                
             </div>
             <div class="card-body">
                 <h5 class="card-title">@user.UserName</h5>
             </div>
             <div class="card-footer">
                 <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post"> 
-                     <a asp-action="EditUser" asp-controller="Administration"
-                        asp-route-id="@user.Id" class="btn btn-primary">Edit</a>
-                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to deldet user : @user.FirstNameLastName')">
-                    Delete</button>
+                     <a asp-action="EditUser" asp-controller="Administration" asp-route-id="@user.Id" class="btn btn-primary">Edytuj</a>
+                     <button type="submit" class="btn btn-danger" onclick="return confirm('Napewno chcesz usunąć użytkownika: @user.FirstNameLastName')">Usuń</button>
                 </form>
             </div>
         </div>
@@ -38,14 +32,14 @@ else
 {
     <div class="card">
         <div class="card-header">
-            Not users created yet
+            Brak użytkowników
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a user
+                Użyj przycisku poniżej aby dodać nowego uzytkownika
             </h5>
             <a class="btn btn-primary" style="width:auto" asp-controller="Account" asp-action="Register">
-                Add new user
+                Dodaj nowego uzytkownika
             </a>
 
         </div>

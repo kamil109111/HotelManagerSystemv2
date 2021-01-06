@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit Role";
 }
 
-<h1>Edit Role</h1>
+<h1>Edytuj Role</h1>
 
 <form method="post" class="mt-3">
     <div class="form-group row">
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="form-group row">
-        <label asp-for="RoleName" class="col-sm-2 col-form-label"></label>
+        <label class="col-sm-2 col-form-label">Nazwa</label>
         <div class="col-sm-10">
             <input asp-for="RoleName" class="form-control" />
             <span asp-validation-for="RoleName" class="text-danger"></span>
@@ -25,14 +25,14 @@
 
     <div class="form-group row">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a asp-action="ListRoles" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Aktualizuj</button>
+            <a asp-action="ListRoles" class="btn btn-primary">Anuluj</a>
         </div>
     </div>
 
     <div class="card">
         <div class="card-header">
-            <h3>Users in this role</h3>
+            <h3>Użytkownicy przypisani do roli</h3>
         </div>
         <div class="card-body">
             @if (Model.Users.Any())
@@ -44,11 +44,11 @@
             }
             else
             {
-                <h5 class="card-title">None at the moment</h5>
+                <h5 class="card-title">Brak użytkowników</h5>
             }
         </div>
         <div class="card-footer">
-            <a asp-action="EditUsersInRole" asp-controller="Administration" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Add or remove users</a>
+            <a asp-action="EditUsersInRole" asp-controller="Administration" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Dodaj lub usuń użytkowników</a>
         </div>
     </div>
 

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Szczegóły</h1>
 
 <!-- Page Content -->
 <div class="container">
@@ -27,16 +27,17 @@
             <p>@Html.DisplayFor(model => model.RoomDescription)</p>
             <h3 class="my-3">Szczegóły:</h3>
             <ul>
-                <li>@Html.DisplayNameFor(model => model.RoomPrice):  @Html.DisplayFor(model => model.RoomPrice) </li>
-                <li>@Html.DisplayNameFor(model => model.RoomCapacity): @Html.DisplayFor(model => model.RoomCapacity) </li>
+                <li>Cena:  @Html.DisplayFor(model => model.RoomPrice) / za noc </li>
+                <li>Max. ilość osób: @Html.DisplayFor(model => model.RoomCapacity) </li>
+                <li>Standard: @Html.DisplayFor(model => model.RoomType) </li>
             </ul>
         </div>
 
     </div>
     <br />
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.RoomId">Edit</a> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Edit" asp-route-id="@Model.RoomId">Edycja</a> |
+        <a asp-action="Index">Powrót do listy</a>
     </div>
 
 

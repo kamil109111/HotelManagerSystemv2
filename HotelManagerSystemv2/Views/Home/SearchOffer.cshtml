@@ -5,7 +5,7 @@
 }
 
 <!doctype html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -40,39 +40,44 @@
 
     <main role="main">
 
-        <div class="jumbotron text-center">
+        <div class="container-md">
 
-            <form asp-action="SearchOffer" method="get">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label class="control-label">Data początkowa</label>
-                    <input asp-for="DateFrom" class="form-control" />
-                    <span asp-validation-for="DateFrom" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Data końcowa</label>
-                    <input asp-for="DateTo" class="form-control " />
-                    <span asp-validation-for="DateTo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Ilość osób</label>
-                    <input asp-for="NoOfPeople" class="form-control" />
-                    <span asp-validation-for="NoOfPeople" class="text-danger"></span>
-                </div>              
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="custom-checkbox" asp-for="Dinner" /> @Html.DisplayName("Dodatkowe wyżywienie")
-                    </label>
-                    <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Zapytanie dotyczy obiadokolacji,
+            <h1>Sprawdź dostępność</h1>
+
+            <div class="jumbotron text-center" style="padding-left:15%; padding-right: 15%; padding-top: 20px;">
+
+                <form asp-action="SearchOffer" method="get">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Data początkowa</label>
+                        <input asp-for="DateFrom" class="form-control" />
+                        <span asp-validation-for="DateFrom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Data końcowa</label>
+                        <input asp-for="DateTo" class="form-control " />
+                        <span asp-validation-for="DateTo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Ilość osób</label>
+                        <input asp-for="NoOfPeople" class="form-control" />
+                        <span asp-validation-for="NoOfPeople" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="custom-checkbox" asp-for="Dinner" /> @Html.DisplayName("Dodatkowe wyżywienie")
+                        </label>
+                        <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Zapytanie dotyczy obiadokolacji,
                           która jest opcjonalna i kosztuje 20 zł za każdą osobę/dziennie. Śniadanie jest dla wszystkich gości i nie jest dodatkowo płatne">help_outline</span>
-                </div>
+                    </div>
 
 
-                <div class="form-group">
-                    <input type="submit" value="Szukaj" class="btn btn-primary" />
-                </div>
-            </form>
+                    <div class="form-group">
+                        <input type="submit" value="Szukaj" class="btn btn-primary" />
+                    </div>
+                </form>
 
+            </div>
         </div>
 
         <div class="album py-5 bg-light">
@@ -139,7 +144,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="~/Content/vendor/jquery/jquery.slim.min.js')</script>
     <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+
 
 
 </body>

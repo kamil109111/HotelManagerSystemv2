@@ -4,17 +4,16 @@
     ViewBag.Title = "All Roles";
 }
 
-<h1>All Roles</h1>
+<h1>Role użytkowników</h1>
 
 @if (Model.Any())
 {
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole" asp-controller="Administration">Add new role</a>
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole" asp-controller="Administration">Dodaj nową role</a>
 
     foreach (var role in Model)
     {
         <div class="card mb-3">
-            <div class="card-header">
-                Role Id : @role.Id
+            <div class="card-header">                
             </div>
             <div class="card-body">
                 <h5 class="card-title">@role.Name</h5>
@@ -22,18 +21,18 @@
             <div class="card-footer">              
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
                     <a class="btn btn-primary" asp-action="EditRole"
-                       asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
+                       asp-controller="Administration" asp-route-id="@role.Id">Edytuj</a>
 
                     @if (role.Name == "Administrator")
                     {
-                        <button disabled type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete role : @role.Name')">
-                            Delete
+                        <button disabled type="submit" class="btn btn-danger" onclick="return confirm('Napewno usunąć role: @role.Name?')">
+                            Usuń
                         </button>
                     }
                     else
                     {
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete role : @role.Name')">
-                            Delete
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Napewno usunąć role: @role.Name?')">
+                            Usuń
                         </button>
                     }
 
@@ -47,13 +46,13 @@ else
 {
     <div class="card">
         <div class="card-header">
-            No roles created yet
+            Brak ról
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a role
+                Użyj przycisku poniżej aby dodać nową role
             </h5>
-            <a class="btn btn-primary" style="width:auto" asp-controller="Administration" asp-action="CreateRole">Create Role</a>
+            <a class="btn btn-primary" style="width:auto" asp-controller="Administration" asp-action="CreateRole">Dodaj nową role</a>
         </div>
     </div>
 }

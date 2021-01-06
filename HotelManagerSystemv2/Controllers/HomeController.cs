@@ -26,9 +26,10 @@ namespace HotelManagerSystemv2.Controllers
 
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var applicationDbContext = _context.Room.Include(r => r.RoomStatus).Include(r => r.RoomType);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         public IActionResult Success()
@@ -104,12 +105,7 @@ namespace HotelManagerSystemv2.Controllers
 
             return RedirectToAction(nameof(Success));
         }
-
-        public async Task<IActionResult> Offer()
-        {
-            var applicationDbContext = _context.Room.Include(r => r.RoomStatus).Include(r => r.RoomType);
-            return View(await applicationDbContext.ToListAsync());
-        }
+        
 
         [HttpGet]
         public IActionResult SearchOffer(SearchRoomViewModel vm)

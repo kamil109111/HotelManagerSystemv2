@@ -4,11 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edycja</h1>
 
-<h4>Booking</h4>
+<h4>Rezerwacja</h4>
 
-<a asp-action="SendEmail" asp-route-id="@Model.Booking.Id">Wyślij wiadomość E-mail</a>
+
 
 <hr />
 <div class="row">
@@ -75,14 +75,14 @@
                 <span asp-validation-for="Booking.RoomId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Zapisz zmiany" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Powrót do grafiku</a>
 </div>
 
 @section Scripts {

@@ -4,21 +4,21 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edycja</h1>
 
-<h4>Room</h4>
+<h4>Pokój</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Room.RoomNumber" class="control-label"></label>
+                <label class="control-label">Nr. pokoju</label>
                 <input asp-for="Room.RoomNumber" class="form-control" />
                 <span asp-validation-for="Room.RoomNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RoomImage" class="control-label"></label>
+                <label class="control-label">Zdjęcie</label>
                 <div class="custom-file">
                     <input class="form-control custom-file-input" asp-for="RoomImage" onchange="DisplayImage(this)" />
                     <label class="custom-file-label">Wybierz plik...</label>
@@ -26,32 +26,32 @@
                 <span asp-validation-for="RoomImage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Room.RoomPrice" class="control-label"></label>
+                <label class="control-label">Cena / za noc</label>
                 <input asp-for="Room.RoomPrice" class="form-control" />
                 <span asp-validation-for="Room.RoomPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Room.RoomCapacity" class="control-label"></label>
+                <label class="control-label">Max. ilość osób</label>
                 <input asp-for="Room.RoomCapacity" class="form-control" />
                 <span asp-validation-for="Room.RoomCapacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Room.RoomDescription" class="control-label"></label>
+                <label class="control-label">Opis</label>
                 <input asp-for="Room.RoomDescription" class="form-control" />
                 <span asp-validation-for="Room.RoomDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Room.RoomTypeId)
+                <label class="control-label">Standard pokoju</label>
                 @Html.DropDownListFor(m => m.Room.RoomTypeId, new SelectList(Model.RoomTypes, "Id", "RoomTypeName"), "Wybierz standard pokoju", new { @class = "form-control" })
                 <span asp-validation-for="Room.RoomTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Room.RoomStatusId)
+                <label class="control-label">Status pokoju</label>
                 @Html.DropDownListFor(m => m.Room.RoomStatusId, new SelectList(Model.RoomStatuses, "Id", "RoomStatusName"), "Wybierz status pokoju", new { @class = "form-control" })
                 <span asp-validation-for="Room.RoomStatusId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Zachowaj zmiany" class="btn btn-primary" />
             </div>
         </form>
     </div>
