@@ -4,11 +4,12 @@
     ViewData["Title"] = "SearchResult";
 }
 
+<div class="container">
 <h1>Sprawdź dostępność pokojów</h1>
 
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="SearchResult" method="get">
+    <div class="col-md-6">
+        <form asp-action="SearchResult" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Data przyjazdu</label>
@@ -102,4 +103,5 @@
         </form>
 
     </div>
+</div>
 </div>

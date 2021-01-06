@@ -11,11 +11,11 @@ namespace HotelManagerSystemv2.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         public  AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
-            _userManager = userManager;
+            //_userManager = userManager;
             _signInManager = signInManager;
         }
          
@@ -53,7 +53,7 @@ namespace HotelManagerSystemv2.Controllers
         }
 
 
-        [HttpGet]
+        /*[HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -69,7 +69,7 @@ namespace HotelManagerSystemv2.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FirstNameLastName = model.FirstNameLastName,
-                    IsGuest = model.IsGuest
+                    
                 };
                 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -92,6 +92,6 @@ namespace HotelManagerSystemv2.Controllers
             }
 
             return View(model);
-        }
+        }*/
     }
 }

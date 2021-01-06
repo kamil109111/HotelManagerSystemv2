@@ -37,6 +37,144 @@ namespace HotelManagerSystemv2.Controllers
             return View();
         }
 
+        [HttpGet] 
+        public IActionResult SearchOffer()
+        {
+            return View();
+        }
+
+               
+
+        [HttpPost]
+        public IActionResult SearchOffer(SearchRoomViewModel vm)
+        {
+            if (vm.DateFrom == null || vm.DateTo == null || vm.NoOfPeople <= 0 || vm.NoOfPeople == null)
+            {
+                return View();
+            }
+
+            if (vm.DateFrom >= vm.DateTo)
+            {
+                return View();
+            }
+
+            var roomsBooked = from b in _context.Booking
+                              where
+                              ((vm.DateFrom >= b.FirstDay) && (vm.DateFrom <= b.LastDay)) ||
+                              ((vm.DateTo >= b.FirstDay) && (vm.DateTo <= b.LastDay)) ||
+                              ((vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay) && (vm.DateTo <= b.LastDay)) ||
+                              ((vm.DateFrom >= b.LastDay) && (vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay)) ||
+                              ((vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay))
+                              select b;
+
+            var availableRooms = _context.Room.Where(r => !roomsBooked.Any(b => b.RoomId == r.RoomId))
+                .Include(x => x.RoomType).ToList();
+
+            foreach (var item in availableRooms)
+            {
+                if (item.RoomCapacity >= vm.NoOfPeople)
+                {
+                    vm.Room.Add(item);
+                }
+            }
+            return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult CreateBooking(int id, DateTime DateFrom, DateTime DateTo, int NoOfPeople, bool Dinner)
+        {
+
+            var Room = _context.Room.Single(model => model.RoomId == id);
+            var RoomPrice = Room.RoomPrice;
+            var numberOfDays = DateTo.Subtract(DateFrom).TotalDays;
+
+
+            Booking booking = new Booking
+            {
+                FirstDay = DateFrom,
+                LastDay = DateTo,
+                NumberOfPeople = NoOfPeople,
+                RoomId = id,
+                Dinner = Dinner
+            };
+
+
+
+
+            if (Dinner == true)
+            {
+                booking.TotalPrice = (numberOfDays * RoomPrice) + ((NoOfPeople * 20) * numberOfDays);
+            }
+            else
+            {
+                booking.TotalPrice = numberOfDays * RoomPrice;
+            }
+
+
+
+            var bookingStatuses = _context.BookingStatus.ToList();
+            var employee = _context.Users.ToList();
+            
+            var viewModel = new BookingViewModel
+            {
+                BookingStatuses = bookingStatuses,
+                Employees = employee,
+                Booking = booking
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateBooking(BookingViewModel bookingvm)
+        {
+            var booking = new Booking
+            {
+                
+                FirstDay = bookingvm.Booking.FirstDay,
+                LastDay = bookingvm.Booking.LastDay,
+                ReservationDate = bookingvm.Booking.ReservationDate,
+                Name = bookingvm.Booking.Name,
+                Phone = bookingvm.Booking.Phone,
+                Email = bookingvm.Booking.Email,
+                Dinner = bookingvm.Booking.Dinner,
+                NumberOfPeople = bookingvm.Booking.NumberOfPeople,
+                Deposit = false,
+                AllPaid = false,
+                TotalPrice = bookingvm.Booking.TotalPrice,
+                BookingStatusId = 1,
+                PaymentStatusId = 1,
+                EmployeeId = bookingvm.Booking.EmployeeId,
+                RoomId = bookingvm.Booking.RoomId,
+                Note = bookingvm.Booking.Note
+            };
+            _context.Add(booking);
+            _context.SaveChanges();
+
+            return RedirectToAction("SendEmail", new RouteValueDictionary(
+            new { action = "SendEmail", booking.Id }));           
+        }        
+
+        // GET: Admin/Rooms/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var room = await _context.Room
+                .Include(r => r.RoomStatus)
+                .Include(r => r.RoomType)
+                .FirstOrDefaultAsync(m => m.RoomId == id);
+            if (room == null)
+            {
+                return NotFound();
+            }
+
+            return View(room);
+        }
+
         [HttpGet]
         public async Task<IActionResult> SendEmail(int id)
         {
@@ -104,146 +242,6 @@ namespace HotelManagerSystemv2.Controllers
             }
 
             return RedirectToAction(nameof(Success));
-        }
-        
-
-        [HttpGet]
-        public IActionResult SearchOffer(SearchRoomViewModel vm)
-        {
-            if (vm.DateFrom == null || vm.DateTo == null)
-            {
-                return View();
-            }
-
-            if (vm.DateFrom >= vm.DateTo)
-            {
-                return View();
-            }
-
-            var roomsBooked = from b in _context.Booking
-                              where
-                              ((vm.DateFrom >= b.FirstDay) && (vm.DateFrom <= b.LastDay)) ||
-                              ((vm.DateTo >= b.FirstDay) && (vm.DateTo <= b.LastDay)) ||
-                              ((vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay) && (vm.DateTo <= b.LastDay)) ||
-                              ((vm.DateFrom >= b.LastDay) && (vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay)) ||
-                              ((vm.DateFrom <= b.LastDay) && (vm.DateTo >= b.LastDay))
-                              select b;
-
-            var availableRooms = _context.Room.Where(r => !roomsBooked.Any(b => b.RoomId == r.RoomId))
-                .Include(x => x.RoomType).ToList();
-
-            foreach (var item in availableRooms)
-            {
-                if (item.RoomCapacity >= vm.NoOfPeople)
-                {
-                    vm.Room.Add(item);
-                }
-            }
-            return View(vm);
-        }
-
-        [HttpGet]
-        public IActionResult CreateBooking(int id, DateTime DateFrom, DateTime DateTo, int NoOfPeople, bool Dinner)
-        {
-
-            var Room = _context.Room.Single(model => model.RoomId == id);
-            var RoomPrice = Room.RoomPrice;
-            var numberOfDays = DateTo.Subtract(DateFrom).TotalDays;
-
-
-            Booking booking = new Booking
-            {
-                FirstDay = DateFrom,
-                LastDay = DateTo,
-                NumberOfPeople = NoOfPeople,
-                RoomId = id,
-                Dinner = Dinner
-            };
-
-
-
-
-            if (Dinner == true)
-            {
-                booking.TotalPrice = (numberOfDays * RoomPrice) + ((NoOfPeople * 20) * numberOfDays);
-            }
-            else
-            {
-                booking.TotalPrice = numberOfDays * RoomPrice;
-            }
-
-
-
-            var bookingStatuses = _context.BookingStatus.ToList();
-            var employee = _context.Users.Where(i => i.IsGuest == false).ToList();
-            var guest = _context.Users.Where(i => i.IsGuest == true).ToList();
-            var viewModel = new BookingViewModel
-            {
-                BookingStatuses = bookingStatuses,
-                Employees = employee,
-                Booking = booking
-            };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateBooking(BookingViewModel bookingvm)
-        {
-            var booking = new Booking
-            {
-                //Id = 1 + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year ,
-                FirstDay = bookingvm.Booking.FirstDay,
-                LastDay = bookingvm.Booking.LastDay,
-                ReservationDate = bookingvm.Booking.ReservationDate,
-                Name = bookingvm.Booking.Name,
-                Phone = bookingvm.Booking.Phone,
-                Email = bookingvm.Booking.Email,
-                Dinner = bookingvm.Booking.Dinner,
-                NumberOfPeople = bookingvm.Booking.NumberOfPeople,
-                Deposit = false,
-                AllPaid = false,
-                TotalPrice = bookingvm.Booking.TotalPrice,
-                BookingStatusId = 1,
-                PaymentStatusId = 1,
-                EmployeeId = bookingvm.Booking.EmployeeId,
-                RoomId = bookingvm.Booking.RoomId
-            };
-            _context.Add(booking);
-            _context.SaveChanges();
-
-            return RedirectToAction("SendEmail", new RouteValueDictionary(
-            new { action = "SendEmail", booking.Id }));
-
-           // return RedirectToAction(actionName: nameof(SendEmail(booking.Id) ));
-        }
-
-        /*
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        */
-
-        // GET: Admin/Rooms/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _context.Room
-                .Include(r => r.RoomStatus)
-                .Include(r => r.RoomType)
-                .FirstOrDefaultAsync(m => m.RoomId == id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
         }
     }
 }

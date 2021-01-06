@@ -20,6 +20,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
 
         public DateTime ReservationDate { get; set; }
 
+        public string Note { get; set; }
+
         public string Name { get; set; }
 
         [Phone]

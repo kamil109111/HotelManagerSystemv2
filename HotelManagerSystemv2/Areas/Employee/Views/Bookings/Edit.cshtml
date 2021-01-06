@@ -35,6 +35,11 @@
                 <span asp-validation-for="Booking.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Komentarz:</label>
+                <input asp-for="Booking.Note" class="form-control" />
+                <span asp-validation-for="Booking.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Data początkowa</label>
                 <input asp-for="Booking.FirstDay" class="form-control" />
                 <span asp-validation-for="Booking.FirstDay" class="text-danger"></span>

@@ -46,6 +46,11 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 return View();
             }
 
+            if (vm.NoOfPeople <= 0)
+            {
+                return View();
+            }
+
             var roomsBooked = from b in _context.Booking
                               where
                               ((vm.DateFrom >= b.FirstDay) && (vm.DateFrom <= b.LastDay)) ||
@@ -158,8 +163,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             }         
 
             var bookingStatuses = _context.BookingStatus.ToList();                     
-            var employee = _context.Users.Where(i => i.IsGuest == false).ToList();
-            var guest = _context.Users.Where(i => i.IsGuest == true).ToList();
+            var employee = _context.Users.ToList();
+            
             var viewModel = new BookingViewModel
             {
                 BookingStatuses = bookingStatuses,
@@ -189,7 +194,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 BookingStatusId = 1,
                 PaymentStatusId = 1,
                 EmployeeId = bookingvm.Booking.EmployeeId,
-                RoomId = bookingvm.Booking.RoomId
+                RoomId = bookingvm.Booking.RoomId,
+                Note = bookingvm.Booking.Note
             };
             _context.Add(booking);
             _context.SaveChanges();
