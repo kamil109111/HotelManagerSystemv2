@@ -11,10 +11,12 @@ using HotelManagerSystemv2.Areas.Employee.ViewModel;
 using MimeKit;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagerSystemv2.Areas.Employee.Controllers
 {
     [Area("Employee")]
+    [Authorize]
     public class BookingsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles ="Administrator")]
    
     public class AdministrationController : Controller
     {

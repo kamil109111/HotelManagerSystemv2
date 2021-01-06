@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    
+    [Authorize(Roles = "Administrator")]
     public class RoomsController : Controller
     {
         private readonly ApplicationDbContext _context;

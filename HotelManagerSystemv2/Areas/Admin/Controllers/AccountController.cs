@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using HotelManagerSystemv2.Models;
 using HotelManagerSystemv2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,6 +22,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             _signInManager = signInManager;
         }
          
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -53,13 +56,14 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles ="Administrator")]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+         [Authorize(Roles ="Administrator")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

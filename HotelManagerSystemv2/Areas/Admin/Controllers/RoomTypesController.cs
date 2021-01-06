@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HotelManagerSystemv2.Areas.Admin.Models;
 using HotelManagerSystemv2.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Administrator")]
     public class RoomTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
