@@ -53,12 +53,7 @@
                     <h3>Suma: @Model.Booking.TotalPrice.ToString("C")</h3>
                     <input type="hidden" asp-for="Booking.TotalPrice" class="form-control" />
                     <span asp-validation-for="Booking.TotalPrice" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Wpłata:</label>
-                    <input asp-for="Booking.PaidInAlready" class="form-control" />
-                    <span asp-validation-for="Booking.PaidInAlready" class="text-danger"></span>
-                </div>
+                </div>                
 
                 <input type="hidden" asp-for="@Model.Booking.ReservationDate" value="@DateTime.Now" />
                 <input type="hidden" asp-for="@Model.Booking.EmployeeId" value="@Model.Booking.EmployeeId" />

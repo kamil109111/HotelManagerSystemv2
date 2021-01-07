@@ -97,9 +97,9 @@
                 </div>
                 <div class="form-group">
                     <h3>Wpłacono: @Model.Booking.PaidInAlready.ToString("C")</h3>
-                    <label class="control-label">Dodaj wpłatę:</label>
-                    <input asp-for="Booking.PaidInAlready" class="form-control bg-success" />
                     <span asp-validation-for="Booking.PaidInAlready" class="text-danger"></span>
+                    <a asp-controller="Payments" asp-action="Index" asp-route-id="@Model.Booking.Id">Lista wpłat</a><br/>
+                    <a asp-controller="Payments" asp-action="Create">Nowa wpłata</a>
                 </div>
             </div>
 

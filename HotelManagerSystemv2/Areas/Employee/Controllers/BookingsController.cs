@@ -198,7 +198,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                     NumberOfPeople = bookingvm.Booking.NumberOfPeople,
                     Deposit = false,
                     AllPaid = false,
-                    PaidInAlready = bookingvm.Booking.PaidInAlready,
+                    PaidInAlready = 0,
                     TotalPrice = bookingvm.Booking.TotalPrice,
                     BookingStatusId = 1,
                     PaymentStatusId = 1,
@@ -273,7 +273,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 else if (vm.Booking.PaymentStatusId == 2)
                 {
                     vm.Booking.BookingStatusId = 2;
-                }
+                }                               
 
                 var numberOfDays = vm.Booking.LastDay.Subtract(vm.Booking.FirstDay).TotalDays;
                 var room = await _context.Room.FindAsync(vm.Booking.RoomId);

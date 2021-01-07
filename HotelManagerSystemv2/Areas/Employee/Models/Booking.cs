@@ -64,7 +64,9 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
 
         public Room Room { get; set; }
         public int RoomId { get; set; }
-        
 
-    }
+        public ICollection<Payment> PaymentList { get; set; }
+
+
+}
 }
