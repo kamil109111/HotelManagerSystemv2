@@ -10,12 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace HotelManagerSystemv2.Controllers
 {
     public class AccountController : Controller
-    {
-        //private readonly UserManager<ApplicationUser> _userManager;
+    {        
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public  AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-        {
-            //_userManager = userManager;
+        public  AccountController(SignInManager<ApplicationUser> signInManager)
+        {            
             _signInManager = signInManager;
         }
          
@@ -51,47 +49,6 @@ namespace HotelManagerSystemv2.Controllers
 
             return View(model);
         }
-
-
-        /*[HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    FirstNameLastName = model.FirstNameLastName,
-                    
-                };
-                
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if(result.Succeeded)
-                {
-                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
-                    {
-                        return RedirectToAction("ListUsers", "Administration");
-                    }
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
-                }
-
-                foreach(var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
-
-            return View(model);
-        }*/
+       
     }
 }

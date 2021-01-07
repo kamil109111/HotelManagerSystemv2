@@ -8,11 +8,11 @@ namespace HotelManagerSystemv2.ViewModels
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Podaj e-mail")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Podaj hasło")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

@@ -198,6 +198,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                     NumberOfPeople = bookingvm.Booking.NumberOfPeople,
                     Deposit = false,
                     AllPaid = false,
+                    PaidInAlready = bookingvm.Booking.PaidInAlready,
                     TotalPrice = bookingvm.Booking.TotalPrice,
                     BookingStatusId = 1,
                     PaymentStatusId = 1,
@@ -231,6 +232,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             var bookingStatuses = _context.BookingStatus.ToList();
             var paymentStatuses = _context.PaymentStatus.ToList();
+            var employees = _context.Users.ToList();
             var rooms = _context.Room.ToList();
 
             var viewModel = new BookingViewModel
@@ -238,7 +240,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 Booking = booking,
                 BookingStatuses = bookingStatuses,
                 PaymentStatuses = paymentStatuses,
-                Rooms = rooms
+                Rooms = rooms,
+                Employees = employees
             };
             
 
@@ -329,7 +332,17 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           
+
+            var bookingStatuses = _context.BookingStatus.ToList();
+            var paymentStatuses = _context.PaymentStatus.ToList();
+            var employees = _context.Users.ToList();
+            var rooms = _context.Room.ToList();
+
+            vm.BookingStatuses = bookingStatuses;
+            vm.PaymentStatuses = paymentStatuses;
+            vm.Rooms = rooms;
+            vm.Employees = employees;            
+
             return View(vm);
         }
         

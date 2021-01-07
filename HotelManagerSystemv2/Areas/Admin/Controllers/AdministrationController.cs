@@ -41,7 +41,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                ViewBag.ErrorMessage = $"Użytkownik o Id = {userId} nie został znaleziony";
                 return View("Notfound");
             }
 
@@ -78,7 +78,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                ViewBag.ErrorMessage = $"Użytkownik o = {userId} nie został znaleziony";
                 return View("NotFound");
             }
 
@@ -226,23 +226,28 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             }
             else
             {
-                user.Email = model.Email;
-                user.UserName = model.UserName;
-                user.FirstNameLastName = model.FirstNameLastName;
-
-                var result = await _userManager.UpdateAsync(user);
-
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("ListUsers");
+                    user.Email = model.Email;
+                    user.UserName = model.UserName;
+                    user.FirstNameLastName = model.FirstNameLastName;
+
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ListUsers");
+                    }
                 }
+                else
+                {                
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
+                    return View(model);
+
                 }
 
                 return View(model);
+
             }           
         }
 

@@ -8,7 +8,7 @@ namespace HotelManagerSystemv2.Areas.Admin.ViewModel
 {
     public class CreateRoleViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Podaj nazwę")]
         public string RoleName { get; set; }
     }
 }

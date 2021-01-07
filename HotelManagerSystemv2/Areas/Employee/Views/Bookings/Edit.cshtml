@@ -1,4 +1,5 @@
 ﻿@model HotelManagerSystemv2.Areas.Employee.ViewModel.BookingViewModel
+@inject SignInManager<ApplicationUser> signInManager;
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,13 +12,16 @@
 
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-4">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Booking.Id" />
             <input type="hidden" asp-for="Booking.Deposit" value="@Model.Booking.Deposit" />
             <input type="hidden" asp-for="Booking.AllPaid" value="@Model.Booking.AllPaid" />
+
+
 
             <div class="form-group">
                 <label class="control-label">Imię i Nazwisko:</label>
@@ -26,7 +30,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Telefon: </label>
-                <input asp-for="Booking.Phone" type="tel" placeholder="+11-111-111-111" class="form-control" />
+                <input asp-for="Booking.Phone" placeholder="+__-___-___-___" class="form-control" />
+                <span id="spnPhoneStatus"></span>
                 <span asp-validation-for="Booking.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,11 +53,6 @@
                 <label class="control-label">Data końcowa</label>
                 <input asp-for="Booking.LastDay" class="form-control" />
                 <span asp-validation-for="Booking.LastDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Data rezerwacji</label>
-                <input asp-for="Booking.ReservationDate" class="form-control" />
-                <span asp-validation-for="Booking.ReservationDate" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -82,13 +82,35 @@
             <div class="form-group">
                 <input type="submit" value="Zapisz zmiany" class="btn btn-primary" />
             </div>
-        </form>
+
+        </div>
+        <div class="col-md-4">
+            <div class="alert-success" style="padding:10px">
+                <div class="form-group">
+                    <h3>Suma: @Model.Booking.TotalPrice.ToString("C")</h3>
+                    <label class="control-label">Edytuj kwotę całkowitą:</label>
+                    <input asp-for="Booking.TotalPrice" class="form-control bg-success" />
+                    <span asp-validation-for="Booking.TotalPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <h3>Pozostało: @((Model.Booking.TotalPrice - Model.Booking.PaidInAlready).ToString("C"))</h3>
+                </div>
+                <div class="form-group">
+                    <h3>Wpłacono: @Model.Booking.PaidInAlready.ToString("C")</h3>
+                    <label class="control-label">Dodaj wpłatę:</label>
+                    <input asp-for="Booking.PaidInAlready" class="form-control bg-success" />
+                    <span asp-validation-for="Booking.PaidInAlready" class="text-danger"></span>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
+</form>
 
 <div>
     <a asp-action="Index">Powrót do grafiku</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

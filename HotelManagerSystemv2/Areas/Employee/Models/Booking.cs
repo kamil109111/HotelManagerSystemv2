@@ -50,6 +50,9 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         [DataType(DataType.Currency)]
         public double TotalPrice {get; set;}
 
+        [DataType(DataType.Currency)]
+        public double PaidInAlready { get; set; }
+
         public BookingStatus BookingStatus { get; set; }        
         public int BookingStatusId { get; set; }
 

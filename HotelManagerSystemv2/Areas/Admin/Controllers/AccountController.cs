@@ -49,7 +49,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                     return RedirectToAction("index", "home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+              //  ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
                 
             }
 
@@ -63,7 +63,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             return View();
         }
 
-         [Authorize(Roles ="Administrator")]
+        [Authorize(Roles ="Administrator")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

@@ -143,6 +143,7 @@ namespace HotelManagerSystemv2.Controllers
                     NumberOfPeople = bookingvm.Booking.NumberOfPeople,
                     Deposit = false,
                     AllPaid = false,
+                    PaidInAlready = 0,
                     TotalPrice = bookingvm.Booking.TotalPrice,
                     BookingStatusId = 1,
                     PaymentStatusId = 1,

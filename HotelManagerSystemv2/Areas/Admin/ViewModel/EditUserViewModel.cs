@@ -16,7 +16,7 @@ namespace HotelManagerSystemv2.Areas.Admin.ViewModel
 
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Podaj nazwę użytkownika")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage ="Podaj adres e-mail")]
