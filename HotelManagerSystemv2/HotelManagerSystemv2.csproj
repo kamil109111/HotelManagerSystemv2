@@ -25,6 +25,8 @@
     <Compile Remove="Migrations\20201203002208_PoprawkaDodanieBooking.Designer.cs" />
     <Compile Remove="Migrations\20201203002712_PoprawkaDodanieBooking.cs" />
     <Compile Remove="Migrations\20201203002712_PoprawkaDodanieBooking.Designer.cs" />
+    <Compile Remove="Migrations\20210106220809_Poprawki.cs" />
+    <Compile Remove="Migrations\20210106220809_Poprawki.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

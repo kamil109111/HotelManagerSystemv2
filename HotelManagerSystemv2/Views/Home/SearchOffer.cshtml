@@ -4,148 +4,100 @@
     ViewData["Title"] = "SearchResult";
 }
 
-<!doctype html>
-<html lang="pl">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
-    <title>Album example · Bootstrap</title>
+<div class="container-md">
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+    <h1>Sprawdź dostępność</h1>
 
+    <div class="jumbotron text-center" style="padding-left:15%; padding-right: 15%; padding-top: 20px;">
 
-    <!-- Bootstrap core CSS -->
-    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="~/Content/css/album.css" rel="stylesheet">
-</head>
-<body>
-
-
-    <main role="main">
-
-        <div class="container-md">
-
-            <h1>Sprawdź dostępność</h1>
-
-            <div class="jumbotron text-center" style="padding-left:15%; padding-right: 15%; padding-top: 20px;">
-
-                <form asp-action="SearchOffer" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label class="control-label">Data początkowa</label>
-                        <input asp-for="DateFrom" class="form-control" />
-                        <span asp-validation-for="DateFrom" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Data końcowa</label>
-                        <input asp-for="DateTo" class="form-control " />
-                        <span asp-validation-for="DateTo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Ilość osób</label>
-                        <input asp-for="NoOfPeople" class="form-control" />
-                        <span asp-validation-for="NoOfPeople" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="custom-checkbox" asp-for="Dinner" /> @Html.DisplayName("Dodatkowe wyżywienie")
-                        </label>
-                        <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Zapytanie dotyczy obiadokolacji,
-                          która jest opcjonalna i kosztuje 20 zł za każdą osobę/dziennie. Śniadanie jest dla wszystkich gości i nie jest dodatkowo płatne">help_outline</span>
-                    </div>
-
-
-                    <div class="form-group">
-                        <input type="submit" value="Szukaj" class="btn btn-primary" />
-                    </div>
-                </form>
-
+        <form asp-action="SearchOffer" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Data początkowa</label>
+                <input asp-for="DateFrom" class="form-control" />
+                <span asp-validation-for="DateFrom" class="text-danger"></span>
             </div>
-        </div>
+            <div class="form-group">
+                <label class="control-label">Data końcowa</label>
+                <input asp-for="DateTo" class="form-control " />
+                <span asp-validation-for="DateTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Ilość osób</label>
+                <input asp-for="NoOfPeople" class="form-control" />
+                <span asp-validation-for="NoOfPeople" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="custom-checkbox" asp-for="Dinner" /> @Html.DisplayName("Dodatkowe wyżywienie")
+                </label>
+                <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Zapytanie dotyczy obiadokolacji,
+                          która jest opcjonalna i kosztuje 20 zł za każdą osobę/dziennie. Śniadanie jest dla wszystkich gości i nie jest dodatkowo płatne">help_outline</span>
+            </div>
 
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <form>
-                    <input type="hidden" asp-for="DateFrom" />
-                    <input type="hidden" asp-for="DateTo" />
-                    <input type="hidden" asp-for="NoOfPeople" />
-                    <input type="hidden" asp-for="Dinner" />
-                    <div class="row">
-                        @if (Model != null)
+
+            <div class="form-group">
+                <input type="submit" value="Szukaj" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <form>
+            <input type="hidden" asp-for="DateFrom" />
+            <input type="hidden" asp-for="DateTo" />
+            <input type="hidden" asp-for="NoOfPeople" />
+            <input type="hidden" asp-for="Dinner" />
+            <div class="row">
+                @if (Model != null)
+                {
+
+
+                    @foreach (var item in Model.Room)
+                    {
+                        @if (item == null)
                         {
+                            <div class="col-md-4">
+                                Brak wyników dla powyższych kryterów wyszukiwania
+                            </div>
+                        }
+
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="~/Images/@item.RoomImage" class="card-img-top" height="225">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.RoomType.RoomTypeName) </h5>
+                                    <h4 class="card-subtitle"> @Html.DisplayFor(modelItem => item.RoomPrice) /za noc</h4>
+                                    <h6 class="small">Cena nie zawiera dodatkowego wyżywienia</h6>
+                                    <p class="card-text">Max. ilość osób: @Html.DisplayFor(modelItem => item.RoomCapacity)</p>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+
+                                        <a type="button" class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.RoomId">Szczegóły</a>
+                                        <input type="submit" value="Zarezerwuj" asp-action="CreateBooking" asp-controller="Home" class="btn btn-primary" asp-route-id="@item.RoomId" />
 
 
-                            @foreach (var item in Model.Room)
-                            {
-                                @if (item == null)
-                                {
-                                    <div class="col-md-4">
-                                        Brak wyników dla powyższych kryterów wyszukiwania
-                                    </div>
-                                }
-
-                                <div class="col-md-4">
-                                    <div class="card mb-4 shadow-sm">
-                                        <img src="~/Images/@item.RoomImage" class="card-img-top" height="225">
-                                        <div class="card-body">
-                                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.RoomType.RoomTypeName) </h5>
-                                            <h4 class="card-subtitle"> @Html.DisplayFor(modelItem => item.RoomPrice) /za noc</h4>
-                                            <h6 class="small">Cena nie zawiera dodatkowego wyżywienia</h6>
-                                            <p class="card-text">Max. ilość osób: @Html.DisplayFor(modelItem => item.RoomCapacity)</p>
-
-                                            <div class="d-flex justify-content-between align-items-center">
-
-                                                <a type="button" class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.RoomId">Szczegóły</a>
-                                                <input type="submit" value="Zarezerwuj" asp-action="CreateBooking" asp-controller="Home" class="btn btn-primary" asp-route-id="@item.RoomId" />
-
-
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                            }
-                        }
-                    </div>
-                </form>
-
+                            </div>
+                        </div>
+                    }
+                }
             </div>
-        </div>
+        </form>
 
-    </main>
-
-
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-
-        </div>
-    </footer>
-
-    <script src="../wwwroot/js/site.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="~/Content/vendor/jquery/jquery.slim.min.js')</script>
-    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </div>
+</div>
 
 
 
-</body>
-</html>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+

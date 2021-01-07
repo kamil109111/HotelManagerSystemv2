@@ -31,12 +31,17 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult SearchResult()
+        {
+            return View();
+        }
        
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult SearchResult(SearchRoomViewModel vm)
         {
-            if (vm.DateFrom == null || vm.DateTo == null)
+            if (vm.DateFrom == null || vm.DateTo == null || vm.NoOfPeople <= 0 || vm.NoOfPeople == null)
             {
                 return View();
             }
@@ -178,30 +183,38 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(BookingViewModel bookingvm)
         {
-            var booking = new Booking
-            {                
-                FirstDay = bookingvm.Booking.FirstDay,
-                LastDay = bookingvm.Booking.LastDay,
-                ReservationDate = bookingvm.Booking.ReservationDate,
-                Name = bookingvm.Booking.Name,
-                Phone = bookingvm.Booking.Phone,
-                Email = bookingvm.Booking.Email,
-                Dinner = bookingvm.Booking.Dinner,
-                NumberOfPeople = bookingvm.Booking.NumberOfPeople,
-                Deposit = false,
-                AllPaid = false,
-                TotalPrice = bookingvm.Booking.TotalPrice,
-                BookingStatusId = 1,
-                PaymentStatusId = 1,
-                EmployeeId = bookingvm.Booking.EmployeeId,
-                RoomId = bookingvm.Booking.RoomId,
-                Note = bookingvm.Booking.Note
-            };
-            _context.Add(booking);
-            _context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                var booking = new Booking
+                {
 
-            return RedirectToAction("SendWelcomeEmail", new RouteValueDictionary(
-           new { action = "SendWelcomeEmail", booking.Id }));
+                    FirstDay = bookingvm.Booking.FirstDay,
+                    LastDay = bookingvm.Booking.LastDay,
+                    ReservationDate = bookingvm.Booking.ReservationDate,
+                    Name = bookingvm.Booking.Name,
+                    Phone = bookingvm.Booking.Phone,
+                    Email = bookingvm.Booking.Email,
+                    Dinner = bookingvm.Booking.Dinner,
+                    NumberOfPeople = bookingvm.Booking.NumberOfPeople,
+                    Deposit = false,
+                    AllPaid = false,
+                    TotalPrice = bookingvm.Booking.TotalPrice,
+                    BookingStatusId = 1,
+                    PaymentStatusId = 1,
+                    EmployeeId = bookingvm.Booking.EmployeeId,
+                    RoomId = bookingvm.Booking.RoomId,
+                    Note = bookingvm.Booking.Note
+                };
+                _context.Add(booking);
+                _context.SaveChanges();
+
+                return RedirectToAction("SendWelcomeEmail", new RouteValueDictionary(
+                new { action = "SendWelcomeEmail", booking.Id }));
+            }
+            else
+            {
+                return View(bookingvm);
+            }
         }      
 
         // GET: Admin/Bookings/Edit/5
@@ -212,7 +225,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             if (booking == null)
             {
-                ViewBag.ErrorMessage = $"Room with Id = {id} cannot be found";
+                ViewBag.ErrorMessage = $"Rezerwacja o  Id = {id} nie została znaleziona";
                 return View("NotFound");
             }
 
@@ -234,16 +247,16 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
         // POST: Admin/Bookings/Edit/5        
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, BookingViewModel vm)
+        public async Task<IActionResult> Edit(int id, BookingViewModel vm)
         {
-            if (id != vm.Booking.Id)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
-            {                
+            {
+                if (id != vm.Booking.Id)
+                {
+                    return NotFound();
+                }
+
                 if (vm.Booking.BookingStatusId == 4 && vm.Booking.PaymentStatusId == 2)
                 {
                     vm.Booking.BookingStatusId = 4;

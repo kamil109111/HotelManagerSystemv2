@@ -15,7 +15,7 @@ namespace HotelManagerSystemv2.Areas.Admin.ViewModel
 
         public string Id { get; set; }
 
-        [Required(ErrorMessage ="Role Name is required")]
+        [Required(ErrorMessage ="Podaj nazwę")]
         public string RoleName { get; set; }
 
         public List<string> Users { get; set; }

@@ -10,6 +10,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage ="Podaj nazwę")]
         [Display(Name = "Nazwa standardu")]
         public string RoomTypeName { get; set; }
 

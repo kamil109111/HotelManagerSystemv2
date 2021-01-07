@@ -19,10 +19,11 @@ namespace HotelManagerSystemv2.Areas.Admin.ViewModel
         [Required]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Podaj adres e-mail")]
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required(ErrorMessage ="Podaj imię i nazwisko")]
         public string FirstNameLastName  { get; set; }
 
         public List<string> Claims { get; set; }

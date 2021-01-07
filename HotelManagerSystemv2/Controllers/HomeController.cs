@@ -128,31 +128,38 @@ namespace HotelManagerSystemv2.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateBooking(BookingViewModel bookingvm)
         {
-            var booking = new Booking
+            if (ModelState.IsValid)
             {
-                
-                FirstDay = bookingvm.Booking.FirstDay,
-                LastDay = bookingvm.Booking.LastDay,
-                ReservationDate = bookingvm.Booking.ReservationDate,
-                Name = bookingvm.Booking.Name,
-                Phone = bookingvm.Booking.Phone,
-                Email = bookingvm.Booking.Email,
-                Dinner = bookingvm.Booking.Dinner,
-                NumberOfPeople = bookingvm.Booking.NumberOfPeople,
-                Deposit = false,
-                AllPaid = false,
-                TotalPrice = bookingvm.Booking.TotalPrice,
-                BookingStatusId = 1,
-                PaymentStatusId = 1,
-                EmployeeId = bookingvm.Booking.EmployeeId,
-                RoomId = bookingvm.Booking.RoomId,
-                Note = bookingvm.Booking.Note
-            };
-            _context.Add(booking);
-            _context.SaveChanges();
+                var booking = new Booking
+                {
 
-            return RedirectToAction("SendEmail", new RouteValueDictionary(
-            new { action = "SendEmail", booking.Id }));           
+                    FirstDay = bookingvm.Booking.FirstDay,
+                    LastDay = bookingvm.Booking.LastDay,
+                    ReservationDate = bookingvm.Booking.ReservationDate,
+                    Name = bookingvm.Booking.Name,
+                    Phone = bookingvm.Booking.Phone,
+                    Email = bookingvm.Booking.Email,
+                    Dinner = bookingvm.Booking.Dinner,
+                    NumberOfPeople = bookingvm.Booking.NumberOfPeople,
+                    Deposit = false,
+                    AllPaid = false,
+                    TotalPrice = bookingvm.Booking.TotalPrice,
+                    BookingStatusId = 1,
+                    PaymentStatusId = 1,
+                    EmployeeId = bookingvm.Booking.EmployeeId,
+                    RoomId = bookingvm.Booking.RoomId,
+                    Note = bookingvm.Booking.Note
+                };
+                _context.Add(booking);
+                _context.SaveChanges();
+
+                return RedirectToAction("SendEmail", new RouteValueDictionary(
+                new { action = "SendEmail", booking.Id }));
+            }
+            else
+            {
+                return View(bookingvm);
+            }
         }        
 
         // GET: Admin/Rooms/Details/5
