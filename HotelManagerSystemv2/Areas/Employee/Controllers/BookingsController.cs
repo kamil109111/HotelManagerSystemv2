@@ -273,8 +273,12 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 else if (vm.Booking.PaymentStatusId == 2)
                 {
                     vm.Booking.BookingStatusId = 2;
-                }                               
+                }
 
+                var paymentList = _context.Payment.Where(i => i.BookingId == vm.Booking.Id).ToList();                
+               vm.Booking.PaidInAlready = paymentList.Sum(i => i.Amount);
+
+                /*
                 var numberOfDays = vm.Booking.LastDay.Subtract(vm.Booking.FirstDay).TotalDays;
                 var room = await _context.Room.FindAsync(vm.Booking.RoomId);
 
@@ -285,7 +289,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 else
                 {
                     vm.Booking.TotalPrice = numberOfDays * room.RoomPrice;
-                }
+                }*/
 
                 try
                 {
@@ -330,7 +334,18 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                var bookingStatuses1 = _context.BookingStatus.ToList();
+                var paymentStatuses1 = _context.PaymentStatus.ToList();
+                var employees1 = _context.Users.ToList();
+                var rooms1 = _context.Room.ToList();
+
+                vm.BookingStatuses = bookingStatuses1;
+                vm.PaymentStatuses = paymentStatuses1;
+                vm.Rooms = rooms1;
+                vm.Employees = employees1;
+
+                return View(vm);
             }
 
             var bookingStatuses = _context.BookingStatus.ToList();
@@ -482,8 +497,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 "Otrzymaliśmy wpłatę na poczet Państwa rezerwacji.\n\n" +
 
                 "Wartość rezerwacji: " + booking.TotalPrice.ToString("C") +
-                "\nSuma wpłat aktualnie wynosi: " + (booking.TotalPrice * 0.4).ToString("C") +
-                "\nDo zapłaty na miejscu: " + (booking.TotalPrice - (booking.TotalPrice * 0.4)).ToString("C") +
+                "\nSuma wpłat aktualnie wynosi: " + (booking.PaidInAlready).ToString("C") +
+                "\nDo zapłaty na miejscu: " + (booking.TotalPrice - (booking.PaidInAlready)).ToString("C") +
                 "\nPozostała kwota za pobyt rozliczana jest w dniu przyjazdu." +
 
                 "\n\nSzczegóły rezerwacji: " +
@@ -550,7 +565,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
                 "Wartość rezerwacji: " + booking.TotalPrice.ToString("C") +
                 "\nSuma wpłat aktualnie wynosi: " + (booking.TotalPrice).ToString("C") +
-                "\nDo zapłaty na miejscu: " + (booking.TotalPrice - (booking.TotalPrice)).ToString("C") +
+                "\nDo zapłaty na miejscu: " + (booking.TotalPrice - (booking.PaidInAlready)).ToString("C") +
                 "\nPozostała kwota za pobyt rozliczana jest w dniu przyjazdu." +
 
                 "\n\nSzczegóły rezerwacji: " +

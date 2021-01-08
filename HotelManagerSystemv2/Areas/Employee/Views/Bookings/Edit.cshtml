@@ -89,7 +89,7 @@
                 <div class="form-group">
                     <h3>Suma: @Model.Booking.TotalPrice.ToString("C")</h3>
                     <label class="control-label">Edytuj kwotę całkowitą:</label>
-                    <input asp-for="Booking.TotalPrice" class="form-control bg-success" />
+                    <input asp-for="Booking.TotalPrice" class="form-control" style="background-color:inherit" />
                     <span asp-validation-for="Booking.TotalPrice" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -98,8 +98,7 @@
                 <div class="form-group">
                     <h3>Wpłacono: @Model.Booking.PaidInAlready.ToString("C")</h3>
                     <span asp-validation-for="Booking.PaidInAlready" class="text-danger"></span>
-                    <a asp-controller="Payments" asp-action="Index" asp-route-id="@Model.Booking.Id">Lista wpłat</a><br/>
-                    <a asp-controller="Payments" asp-action="Create">Nowa wpłata</a>
+                    <a class="btn btn-success" asp-controller="Payments" asp-action="Index" asp-route-id="@Model.Booking.Id">Dodaj wpłatę</a>                    
                 </div>
             </div>
 

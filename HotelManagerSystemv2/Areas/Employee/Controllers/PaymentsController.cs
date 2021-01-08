@@ -9,10 +9,12 @@ using HotelManagerSystemv2.Areas.Employee.Models;
 using HotelManagerSystemv2.Data;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagerSystemv2.Areas.Employee.Controllers
 {
     [Area("Employee")]
+    [Authorize]
     public class PaymentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -51,7 +53,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Info,Amount,BookingId")] Payment payment)
+        public async Task<IActionResult> Create([Bind("Id,Info,Amount,Date,BookingId")] Payment payment)
         {
             if (ModelState.IsValid)
             {              
@@ -80,11 +82,13 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 return NotFound();
             }
 
+            ViewBag.Id = HttpContext.Session.GetInt32("Id");
             var payment = await _context.Payment.FindAsync(id);
             if (payment == null)
             {
                 return NotFound();
             }
+
             ViewData["BookingId"] = new SelectList(_context.Booking, "Id", "Email", payment.BookingId);
             return View(payment);
         }
@@ -94,7 +98,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Info,Amount,BookingId")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Info,Amount,Date,BookingId")] Payment payment)
         {
             if (id != payment.Id)
             {
@@ -104,9 +108,18 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {                   
+
                     _context.Update(payment);
                     await _context.SaveChangesAsync();
+
+                    var paymentList = _context.Payment.Where(i => i.BookingId == payment.BookingId).ToList();
+                    var booking = _context.Booking.Single(i => i.Id == payment.BookingId);
+                    booking.PaidInAlready = paymentList.Sum(i => i.Amount);
+
+                    _context.Update(booking);
+                    await _context.SaveChangesAsync();
+                   
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,7 +132,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                         throw;
                     }
                 }
-                return Redirect("Index/" + payment.BookingId);
+                return RedirectToAction("Index", "Payments", new { id = payment.BookingId });
             }
             ViewData["BookingId"] = new SelectList(_context.Booking, "Id", "Email", payment.BookingId);
             return View(payment);
@@ -132,6 +145,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.Id = HttpContext.Session.GetInt32("Id");
 
             var payment = await _context.Payment
                 .Include(p => p.Booking)
@@ -150,9 +165,19 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var payment = await _context.Payment.FindAsync(id);
+
             _context.Payment.Remove(payment);
             await _context.SaveChangesAsync();
-            return Redirect("Index/" + payment.BookingId);
+
+            var paymentList = _context.Payment.Where(i => i.BookingId == payment.BookingId).ToList();
+            var booking = _context.Booking.Single(i => i.Id == payment.BookingId);
+            booking.PaidInAlready = paymentList.Sum(i => i.Amount);
+
+            _context.Update(booking);
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction("Index", "Payments", new { id = payment.BookingId });
         }
 
         private bool PaymentExists(int id)
