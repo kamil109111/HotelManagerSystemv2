@@ -76,7 +76,8 @@ namespace HotelManagerSystemv2.Controllers
                 {
                     vm.Room.Add(item);
                 }
-            }
+            }              
+
             return View(vm);
         }
 

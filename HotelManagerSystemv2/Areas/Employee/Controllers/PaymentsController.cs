@@ -10,6 +10,8 @@ using HotelManagerSystemv2.Data;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using HotelManagerSystemv2.Models;
 
 namespace HotelManagerSystemv2.Areas.Employee.Controllers
 {
@@ -18,46 +20,46 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
     public class PaymentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PaymentsController(ApplicationDbContext context)
+        public PaymentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: Employee/Payments
+       
         public async Task<IActionResult> Index(int id)
         {
             ViewBag.Id = id;
             HttpContext.Session.SetInt32("Id", id);
-            var applicationDbContext = _context.Payment.Where(i => i.BookingId == id).Include(p => p.Booking);
+            var applicationDbContext = _context.Payment.Where(i => i.BookingId == id).Include(p => p.Booking).Include(p => p.Employee);
             return View(await applicationDbContext.ToListAsync());
         }
                         
 
-        // GET: Employee/Payments/Create
         public IActionResult Create()
         {
 
-            ViewBag.Id = HttpContext.Session.GetInt32("Id");
+            ViewBag.Id = HttpContext.Session.GetInt32("Id");            
             var payment = new Payment
             {
-                BookingId = ViewBag.Id
+                BookingId = ViewBag.Id,
+                
             };
 
 
             return View(payment);
         }
 
-        // POST: Employee/Payments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Info,Amount,Date,BookingId")] Payment payment)
+        public async Task<IActionResult> Create([Bind("Id,Info,Amount,Date,BookingId,EmployeeId")] Payment payment)
         {
             if (ModelState.IsValid)
             {              
-
+                payment.EmployeeId = _userManager.GetUserId(HttpContext.User);
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
 
@@ -74,7 +76,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             return View(payment);
         }
 
-        // GET: Employee/Payments/Edit/5
+                
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,17 +90,16 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             {
                 return NotFound();
             }
+                        
 
             ViewData["BookingId"] = new SelectList(_context.Booking, "Id", "Email", payment.BookingId);
             return View(payment);
         }
-
-        // POST: Employee/Payments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+                
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Info,Amount,Date,BookingId")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Info,Amount,Date,BookingId,EmployeeId")] Payment payment)
         {
             if (id != payment.Id)
             {
@@ -108,7 +109,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {                   
+                {
+                    payment.EmployeeId = _userManager.GetUserId(HttpContext.User);
 
                     _context.Update(payment);
                     await _context.SaveChangesAsync();
@@ -137,8 +139,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             ViewData["BookingId"] = new SelectList(_context.Booking, "Id", "Email", payment.BookingId);
             return View(payment);
         }
-
-        // GET: Employee/Payments/Delete/5
+                
+                
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -158,8 +160,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             return View(payment);
         }
-
-        // POST: Employee/Payments/Delete/5
+                
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

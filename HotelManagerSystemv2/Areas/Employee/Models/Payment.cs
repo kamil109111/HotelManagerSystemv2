@@ -27,7 +27,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         public Booking Booking { get; set; }
         public int BookingId { get; set; }
 
-        
+        public ApplicationUser Employee { get; set; }
+        public string EmployeeId { get; set; }
 
     }
 }

@@ -4,6 +4,9 @@
     ViewData["Title"] = "SearchResult";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <div class="container-md">
 
     <h1>Sprawdź dostępność</h1>
@@ -92,6 +95,13 @@
     </div>
 </div>
 
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
 @section Scripts {
