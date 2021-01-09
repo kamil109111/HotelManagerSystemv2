@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    
+    [Authorize(Roles ="Administrator")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -125,14 +125,14 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             return View(model);
         }
 
-        [Authorize(Roles ="Administrator")]
+        
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        [Authorize(Roles ="Administrator")]
+        
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

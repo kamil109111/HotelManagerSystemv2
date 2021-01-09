@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using HotelManagerSystemv2.Areas.Admin.ViewModel;
 using HotelManagerSystemv2.Models;
 using HotelManagerSystemv2.ViewModels;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 
 namespace HotelManagerSystemv2.Controllers
 {
@@ -83,7 +86,13 @@ namespace HotelManagerSystemv2.Controllers
 
                     _logger.Log(LogLevel.Warning, passwordResetLink);
 
-                    return View("ForgotPasswordConfirmation");
+                    return RedirectToAction("SendResetPasswordEmail", new
+                    {
+                        email = model.Email,
+                        link = passwordResetLink
+                        
+                    });                  
+                                       
                 }
 
                 return View("ForgotPasswordConfirmation");
@@ -123,6 +132,36 @@ namespace HotelManagerSystemv2.Controllers
 
             return View(model);
         }
-       
+
+        
+        public IActionResult SendResetPasswordEmail(string email, string link)
+        {
+
+            string text = new String("Przejdź do podanego linku aby ustanowić nowe hasło: \n" + link);
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("HotelSystemManager", "ttest69777@gmail.com"));
+            message.To.Add(new MailboxAddress(email, email));
+            message.Subject = "HotelSystemManager - Reset hasła";
+
+            var builder = new BodyBuilder
+            {
+                TextBody = text
+            };
+
+            message.Body = builder.ToMessageBody();
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("ttest69777@gmail.com", "Qwerty12345!");
+                client.Send(message);
+
+                client.Disconnect(true);
+            }
+
+            return View("ForgotPasswordConfirmation");
+        }
+
     }
 }
