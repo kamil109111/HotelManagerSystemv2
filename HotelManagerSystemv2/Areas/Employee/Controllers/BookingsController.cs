@@ -78,13 +78,18 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             return View(vm);
         }
 
+
+
+
         // GET: Admin/Bookings 
-        public async Task<IActionResult> Index(string bookingStatus, string paymentStatus, string searchString, string arrivals, string departure)
+        public async Task<IActionResult> Index(string sortOrder, string bookingStatus, string paymentStatus, string searchString, string arrivals, string departure)
         {
             ViewData["GetBookingDetails"] = searchString;
             ViewData["Status"] = bookingStatus;
             ViewData["Arrivals"] = arrivals;
             ViewData["Departure"] = departure;
+            ViewData["DateSortParm1"] = sortOrder == "date1_asc" ? "date1_desc" : "date1_asc";
+            ViewData["DateSortParm2"] = sortOrder == "date2_asc" ? "date2_desc" : "date2_asc";
 
             IQueryable<string> bookingQuery = from m in _context.BookingStatus
                                               select m.BookingStatusName;
@@ -93,6 +98,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             var booking = from b in _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee).Include(b => b.PaymentStatus)
                           select b;
 
+           
             if (!String.IsNullOrEmpty(searchString))
             {
                 booking = booking.Where(s => s.Name.Contains(searchString) || s.Email.Equals(searchString) || s.Id.ToString().Equals(searchString));
@@ -101,6 +107,10 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             if (!string.IsNullOrEmpty(bookingStatus))
             {
                 booking = booking.Where(x => x.BookingStatus.BookingStatusName == bookingStatus);
+            }
+            else
+            {
+                booking = booking.Where(x => x.BookingStatus.BookingStatusName != "Wymeldowany");
             }
             if (!string.IsNullOrEmpty(paymentStatus))
             {
@@ -115,6 +125,29 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             if (!string.IsNullOrEmpty(departure))
             {
                 booking = booking.Where(x => x.LastDay.Date.ToString() == departure);
+            }
+
+            if (!string.IsNullOrEmpty(sortOrder))
+            {
+                switch (sortOrder)
+                {
+                    case "date1_asc":
+                        booking = booking.OrderBy(s => s.FirstDay);
+                        break;
+                    case "date2_asc":
+                        booking = booking.OrderBy(s => s.LastDay);
+                        break;
+                    case "date1_desc":
+                        booking = booking.OrderByDescending(s => s.FirstDay);
+                        break;
+                    case "date2_desc":
+                        booking = booking.OrderByDescending(s => s.LastDay);
+                        break;
+                }
+            }
+            else
+            {
+                booking = booking.OrderBy(s => s.FirstDay);
             }
 
             return View(await booking.AsNoTracking().ToListAsync());
