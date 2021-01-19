@@ -55,8 +55,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
         // GET: Admin/Rooms/Create
         public IActionResult Create()
         {
-            //ViewData["RoomStatusId"] = new SelectList(_context.RoomStatus, "Id", "Id");
-            //return View();
+            
 
             var roomStatuses = _context.RoomStatus.ToList();
             var roomTypes = _context.RoomType.ToList();
@@ -69,10 +68,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             return View(viewModel);
 
         }
-
-        // POST: Admin/Rooms/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+                
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(RoomViewModel roomvm)
@@ -99,42 +95,6 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-
-        /* public async Task<IActionResult> Create(RoomViewModel roomvm)
-         {
-             string stringFileName = UploadFile(roomvm);
-
-             if (!ModelState.IsValid)
-             {
-                 var viewModel = new RoomViewModel
-                 {
-                     Room = roomvm.Room,
-                     RoomImage = roomvm.RoomImage,
-                     RoomStatuses = _context.RoomStatus.ToList(),
-
-                 };
-                 return View("Create", viewModel);
-             }
-
-             if (roomvm.Room.RoomId == 0)
-                 _context.Room.Add(roomvm.Room);
-             else
-             {
-                 var roomInDb = _context.Room.Single(c => c.RoomId == roomvm.Room.RoomId);
-                 roomInDb.RoomNumber = roomvm.Room.RoomNumber;
-                 roomInDb.RoomImage = stringFileName;
-                 roomInDb.RoomCapacity = roomvm.Room.RoomCapacity;
-                 roomInDb.RoomDescription = roomvm.Room.RoomDescription;
-                 roomInDb.RoomPrice = roomvm.Room.RoomPrice;
-                 roomInDb.RoomStatusId = roomvm.Room.RoomStatusId;
-             }
-
-             await _context.SaveChangesAsync();
-
-             return RedirectToAction(nameof(Index));
-         }*/
-
         private string UploadFile(RoomViewModel roomvm)
         {
             string fileName = null;
@@ -148,18 +108,6 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             }
             return fileName;
         }
-
-        /*public async Task<IActionResult> Create([Bind("RoomId,RoomNumber,RoomImage,RoomPrice,RoomCapacity,RoomDescription,RoomStatusId")] Room room)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(room);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RoomStatusId"] = new SelectList(_context.RoomStatus, "Id", "Id", room.RoomStatusId);
-            return View(room);
-        }*/
 
         // GET: Admin/Rooms/Edit/5
         [HttpGet]
@@ -182,27 +130,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             return View(viewModel);
         }
-
-
-        /*public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _context.Room.FindAsync(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-            ViewData["RoomStatusId"] = new SelectList(_context.RoomStatus, "Id", "Id", room.RoomStatusId);
-            return View(room);
-        }*/
-
-        // POST: Admin/Rooms/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]   
         public async Task<IActionResult> Edit(int id, RoomViewModel roomvm)
         {

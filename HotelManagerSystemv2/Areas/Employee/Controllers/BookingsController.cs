@@ -218,6 +218,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         {
             if (ModelState.IsValid)
             {
+                               
+
                 var booking = new Booking
                 {
 
@@ -236,11 +238,13 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                     BookingStatusId = 1,
                     PaymentStatusId = 1,
                     EmployeeId = bookingvm.Booking.EmployeeId,
-                    RoomId = bookingvm.Booking.RoomId,
-                    Note = bookingvm.Booking.Note
+                    RoomId = bookingvm.Booking.RoomId,                   
+                    Note = bookingvm.Booking.Note,
+                    
                 };
                 _context.Add(booking);
                 _context.SaveChanges();
+                              
 
                 return RedirectToAction("SendWelcomeEmail", new RouteValueDictionary(
                 new { action = "SendWelcomeEmail", booking.Id }));
@@ -328,7 +332,21 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 {
                     _context.Update(vm.Booking);
                     await _context.SaveChangesAsync();
-                    
+
+                    var room = _context.Room.Single(i => i.RoomId == vm.Booking.RoomId);
+
+                    if (vm.Booking.BookingStatusId == 3)
+                    {
+                        room.RoomStatusId = 2;
+                    }
+                    if (vm.Booking.BookingStatusId == 4)
+                    {
+                        room.RoomStatusId = 3;
+                    }
+                    _context.Update(room);
+                    await _context.SaveChangesAsync();
+
+
                     if (((vm.Booking.PaymentStatusId == 2) && (vm.Booking.Deposit == false)) == true)
                     {
 

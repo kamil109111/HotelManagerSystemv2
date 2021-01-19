@@ -1,0 +1,99 @@
+﻿
+@model IEnumerable<HotelManagerSystemv2.Areas.Admin.Models.Room>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pokoje</h1>
+
+<form asp-area="Employee" asp-controller="Rooms" asp-action="Index" method="get">
+    <p>
+        <select name="roomStatus">
+
+            <option selected disabled hidden>Wybierz status pokoju</option>
+            <option>Dostępny</option>
+            <option>Zajęty</option>
+            <option>Do posprzątania</option>            
+        </select>
+        <input type="submit" value="Szukaj" /> |
+        <a asp-action="Index">Wyczyść filtry wyszukiwania</a>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nr. pokoju
+            </th>
+            <th>
+                Zdjęcie
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.RoomStatusId == 1)
+            {
+                <tr style="background-color: #CCFFE5">
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.RoomNumber)
+                    </td>
+                    <td>
+                        <img src="~/Images/@item.RoomImage" class=" rounded-circle" width="40" height="40" asp-append-version="true" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomStatus.RoomStatusName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RoomId">Edycja</a> |
+                        <a asp-action="Details" asp-route-id="@item.RoomId">Szczegóły</a>
+                    </td>
+                </tr>
+            }
+            @if (item.RoomStatusId == 2)
+            {
+                <tr style="background-color: #AED6F1">
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.RoomNumber)
+                    </td>
+                    <td>
+                        <img src="~/Images/@item.RoomImage" class=" rounded-circle" width="40" height="40" asp-append-version="true" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomStatus.RoomStatusName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RoomId">Edycja</a> |
+                        <a asp-action="Details" asp-route-id="@item.RoomId">Szczegóły</a>
+                    </td>
+                </tr>
+            }
+            @if (item.RoomStatusId == 3)
+            {
+                <tr style="background-color: #FF9999">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomNumber)
+                    </td>
+                    <td>
+                        <img src="~/Images/@item.RoomImage" class=" rounded-circle" width="40" height="40" asp-append-version="true" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomStatus.RoomStatusName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RoomId">Edycja</a> |
+                        <a asp-action="Details" asp-route-id="@item.RoomId">Szczegóły</a>
+                    </td>
+                </tr="background-color:>
+            }
+        }
+    </tbody>
+</table>
