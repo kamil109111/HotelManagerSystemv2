@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using HotelManagerSystemv2.Areas.Employee.Models;
+using HotelManagerSystemv2.Areas.Employee.ViewModel;
+using HotelManagerSystemv2.Data;
+using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using MimeKit;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using HotelManagerSystemv2.Models;
-using HotelManagerSystemv2.Data;
-using Microsoft.EntityFrameworkCore;
-using HotelManagerSystemv2.Areas.Employee.ViewModel;
-using HotelManagerSystemv2.Areas.Employee.Models;
-using MimeKit;
-using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Routing;
 
 namespace HotelManagerSystemv2.Controllers
 {
     public class HomeController : Controller
-    {        
+    {
         private readonly ApplicationDbContext _context;
         public HomeController(ApplicationDbContext context)
-        {            
+        {
             _context = context;
         }
 
@@ -37,13 +33,13 @@ namespace HotelManagerSystemv2.Controllers
             return View();
         }
 
-        [HttpGet] 
+        [HttpGet]
         public IActionResult SearchOffer()
         {
             return View();
         }
 
-               
+
 
         [HttpPost]
         public IActionResult SearchOffer(SearchRoomViewModel vm)
@@ -76,7 +72,7 @@ namespace HotelManagerSystemv2.Controllers
                 {
                     vm.Room.Add(item);
                 }
-            }              
+            }
 
             return View(vm);
         }
@@ -115,7 +111,7 @@ namespace HotelManagerSystemv2.Controllers
 
             var bookingStatuses = _context.BookingStatus.ToList();
             var employee = _context.Users.ToList();
-            
+
             var viewModel = new BookingViewModel
             {
                 BookingStatuses = bookingStatuses,
@@ -162,7 +158,7 @@ namespace HotelManagerSystemv2.Controllers
             {
                 return View(bookingvm);
             }
-        }        
+        }
 
         // GET: Admin/Rooms/Details/5
         public async Task<IActionResult> Details(int? id)

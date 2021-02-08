@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HotelManagerSystemv2.Areas.Admin.Models;
+using HotelManagerSystemv2.Areas.Admin.ViewModel;
+using HotelManagerSystemv2.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HotelManagerSystemv2.Areas.Admin.Models;
-using HotelManagerSystemv2.Data;
-using HotelManagerSystemv2.Areas.Admin.ViewModel;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
@@ -55,7 +53,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
         // GET: Admin/Rooms/Create
         public IActionResult Create()
         {
-            
+
 
             var roomStatuses = _context.RoomStatus.ToList();
             var roomTypes = _context.RoomType.ToList();
@@ -68,7 +66,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             return View(viewModel);
 
         }
-                
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(RoomViewModel roomvm)
@@ -125,13 +123,13 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
             {
                 Room = room,
                 RoomStatuses = _context.RoomStatus.ToList(),
-                RoomTypes = _context.RoomType.ToList()              
+                RoomTypes = _context.RoomType.ToList()
             };
 
             return View(viewModel);
         }
-       
-        [HttpPost]   
+
+        [HttpPost]
         public async Task<IActionResult> Edit(int id, RoomViewModel roomvm)
         {
             string stringFilename = UploadFile(roomvm);
@@ -162,7 +160,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                 try
                 {
                     _context.Update(room);
-                  await  _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

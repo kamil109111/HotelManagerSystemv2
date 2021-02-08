@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HotelManagerSystemv2.Areas.Employee.Models;
+using HotelManagerSystemv2.Data;
+using HotelManagerSystemv2.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HotelManagerSystemv2.Areas.Employee.Models;
-using HotelManagerSystemv2.Data;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using HotelManagerSystemv2.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HotelManagerSystemv2.Areas.Employee.Controllers
 {
@@ -28,7 +25,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             _userManager = userManager;
         }
 
-       
+
         public async Task<IActionResult> Index(int id)
         {
             ViewBag.Id = id;
@@ -36,29 +33,29 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             var applicationDbContext = _context.Payment.Where(i => i.BookingId == id).Include(p => p.Booking).Include(p => p.Employee);
             return View(await applicationDbContext.ToListAsync());
         }
-                        
+
 
         public IActionResult Create()
         {
 
-            ViewBag.Id = HttpContext.Session.GetInt32("Id");            
+            ViewBag.Id = HttpContext.Session.GetInt32("Id");
             var payment = new Payment
             {
                 BookingId = ViewBag.Id,
-                
+
             };
 
 
             return View(payment);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Info,Amount,Date,BookingId,EmployeeId")] Payment payment)
         {
             if (ModelState.IsValid)
-            {              
+            {
                 payment.EmployeeId = _userManager.GetUserId(HttpContext.User);
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
@@ -70,13 +67,13 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 _context.Update(booking);
                 await _context.SaveChangesAsync();
 
-                return Redirect("Index/"+payment.BookingId);
+                return Redirect("Index/" + payment.BookingId);
             }
             ViewData["BookingId"] = new SelectList(_context.Booking, "Id", "Email", payment.BookingId);
             return View(payment);
         }
 
-                
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,13 +87,13 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             {
                 return NotFound();
             }
-                        
+
 
             ViewData["BookingId"] = new SelectList(_context.Booking, "Id", "Email", payment.BookingId);
             return View(payment);
         }
-        
-                
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Info,Amount,Date,BookingId,EmployeeId")] Payment payment)
@@ -121,7 +118,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
                     _context.Update(booking);
                     await _context.SaveChangesAsync();
-                   
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -139,8 +136,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             ViewData["BookingId"] = new SelectList(_context.Booking, "Id", "Email", payment.BookingId);
             return View(payment);
         }
-                
-                
+
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -160,8 +157,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             return View(payment);
         }
-                
-        
+
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

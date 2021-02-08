@@ -1,10 +1,8 @@
-﻿using System;
+﻿using HotelManagerSystemv2.Areas.Admin.Models;
+using HotelManagerSystemv2.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using HotelManagerSystemv2.Areas.Admin.Models;
-using HotelManagerSystemv2.Models;
 
 namespace HotelManagerSystemv2.Areas.Employee.Models
 {
@@ -12,12 +10,12 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="Podaj datę początkową")]
-        [DataType(DataType.Date)]        
+        [Required(ErrorMessage = "Podaj datę początkową")]
+        [DataType(DataType.Date)]
         public DateTime FirstDay { get; set; }
 
         [Required(ErrorMessage = "Podaj datę końcową")]
-        [DataType(DataType.Date)]        
+        [DataType(DataType.Date)]
         public DateTime LastDay { get; set; }
 
         [Required]
@@ -30,12 +28,12 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         [StringLength(50, ErrorMessage = "Imię i nazwisko może mieć max. 50 znaków")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Podaj numer telefonu")]        
-        [Phone(ErrorMessage ="Nieprawidłowy format numeru telefonu")]
+        [Required(ErrorMessage = "Podaj numer telefonu")]
+        [Phone(ErrorMessage = "Nieprawidłowy format numeru telefonu")]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage ="Podaj adres E-mail")]        
-        [EmailAddress(ErrorMessage ="Nieprawidłowy format adresu E-mail")]
+        [Required(ErrorMessage = "Podaj adres E-mail")]
+        [EmailAddress(ErrorMessage = "Nieprawidłowy format adresu E-mail")]
         public string Email { get; set; }
 
         public bool Dinner { get; set; }
@@ -46,14 +44,14 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         public bool Deposit { get; set; }
 
         public bool AllPaid { get; set; }
-               
+
         [DataType(DataType.Currency)]
-        public double TotalPrice {get; set;}
+        public double TotalPrice { get; set; }
 
         [DataType(DataType.Currency)]
         public double PaidInAlready { get; set; }
 
-        public BookingStatus BookingStatus { get; set; }        
+        public BookingStatus BookingStatus { get; set; }
         public int BookingStatusId { get; set; }
 
         public PaymentStatus PaymentStatus { get; set; }
@@ -68,5 +66,5 @@ namespace HotelManagerSystemv2.Areas.Employee.Models
         public ICollection<Payment> PaymentList { get; set; }
 
 
-}
+    }
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HotelManagerSystemv2.Areas.Admin.ViewModel;
+﻿using HotelManagerSystemv2.Areas.Admin.ViewModel;
 using HotelManagerSystemv2.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HotelManagerSystemv2.Areas.Employee.Controllers
 {
@@ -15,29 +13,29 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
     public class RoomsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
+
         public RoomsController(ApplicationDbContext context)
         {
             _context = context;
 
         }
-        
+
 
         public async Task<IActionResult> Index(string roomStatus)
-        {            
+        {
 
             IQueryable<string> roomQuery = from m in _context.RoomStatus
-                                              select m.RoomStatusName;
+                                           select m.RoomStatusName;
 
 
             var room = from b in _context.Room.Include(b => b.RoomStatus)
-                          select b;
-                      
+                       select b;
+
 
             if (!string.IsNullOrEmpty(roomStatus))
             {
                 room = room.Where(x => x.RoomStatus.RoomStatusName == roomStatus);
-            }            
+            }
 
             return View(await room.AsNoTracking().ToListAsync());
         }
@@ -59,7 +57,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             {
                 Room = room,
                 RoomStatuses = _context.RoomStatus.ToList()
-            };   
+            };
 
             return View(viewModel);
         }
@@ -67,7 +65,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, RoomViewModel roomvm)
         {
-           
+
             var room = _context.Room.SingleOrDefault(r => r.RoomId == id);
 
             if (room == null)
@@ -77,16 +75,16 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             }
 
             {
-                               
+
                 room.RoomStatusId = roomvm.Room.RoomStatusId;
-                              
+
             };
-                        
+
             _context.Update(room);
             await _context.SaveChangesAsync();
-                         
+
             return RedirectToAction(nameof(Index));
-                                    
+
         }
 
         public async Task<IActionResult> Details(int? id)

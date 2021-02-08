@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HotelManagerSystemv2.Areas.Admin.ViewModel
 {
@@ -16,15 +13,15 @@ namespace HotelManagerSystemv2.Areas.Admin.ViewModel
 
         public string Id { get; set; }
 
-        [Required(ErrorMessage ="Podaj nazwę użytkownika")]
+        [Required(ErrorMessage = "Podaj nazwę użytkownika")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage ="Podaj adres e-mail")]
+        [Required(ErrorMessage = "Podaj adres e-mail")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage ="Podaj imię i nazwisko")]
-        public string FirstNameLastName  { get; set; }
+        [Required(ErrorMessage = "Podaj imię i nazwisko")]
+        public string FirstNameLastName { get; set; }
 
         public List<string> Claims { get; set; }
 

@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HotelManagerSystemv2.Areas.Employee.ViewModel
 {
@@ -23,7 +21,7 @@ namespace HotelManagerSystemv2.Areas.Employee.ViewModel
         [Range(1, 8, ErrorMessage = "Podaj wartość między 1 a 8")]
         public int? NoOfPeople { get; set; }
         public bool Dinner { get; set; }
-        
+
         public IList<Room> Room { get; set; } = new List<Room>();
 
     }

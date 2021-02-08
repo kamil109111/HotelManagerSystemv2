@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,8 +14,8 @@ using System.Threading.Tasks;
 namespace HotelManagerSystemv2.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles ="Administrator")]
-   
+    [Authorize(Roles = "Administrator")]
+
     public class AdministrationController : Controller
     {
 
@@ -47,7 +46,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             var model = new List<UserRolesViewModel>();
 
-            foreach(var role in _roleManager.Roles)
+            foreach (var role in _roleManager.Roles)
             {
                 var userRolesViewModel = new UserRolesViewModel
                 {
@@ -93,7 +92,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             result = await _userManager.AddToRolesAsync(user,
                 model.Where(x => x.IsSelected).Select(y => y.RoleName));
-            
+
             if (!result.Succeeded)
             {
                 ModelState.AddModelError("", "Cannot add selected roles to user");
@@ -169,7 +168,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
 
-                return View("ListUsers"); 
+                return View("ListUsers");
             }
         }
 
@@ -192,7 +191,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
 
-            if (user == null )
+            if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
@@ -240,7 +239,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                     }
                 }
                 else
-                {                
+                {
 
                     return View(model);
 
@@ -248,7 +247,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
                 return View(model);
 
-            }           
+            }
         }
 
         [HttpGet]
@@ -363,7 +362,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
             var model = new List<UserRoleViewModel>();
             {
-                foreach(var user in _userManager.Users.Where(i => i.IsGuest == false))
+                foreach (var user in _userManager.Users.Where(i => i.IsGuest == false))
                 {
                     var userRoleViewModel = new UserRoleViewModel
                     {
@@ -372,7 +371,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                         IsGuest = user.IsGuest
                     };
 
-                    if(await _userManager.IsInRoleAsync(user, role.Name))
+                    if (await _userManager.IsInRoleAsync(user, role.Name))
                     {
                         userRoleViewModel.IsSelected = true;
                     }
@@ -386,7 +385,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
 
                 return View(model);
             }
-               
+
         }
 
         [HttpPost]
@@ -400,7 +399,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                 return View("NotFound");
             }
 
-            for(int i=0; i < model.Count; i++)
+            for (int i = 0; i < model.Count; i++)
             {
                 var user = await _userManager.FindByIdAsync(model[i].UserId);
 
@@ -419,7 +418,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Controllers
                     continue;
                 }
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     if (i < (model.Count - 1))
                         continue;

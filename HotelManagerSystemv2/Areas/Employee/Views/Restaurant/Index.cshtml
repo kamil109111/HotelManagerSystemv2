@@ -1,0 +1,77 @@
+﻿
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Kuchnia</h1>
+
+<form>
+    <p>
+        <input type="date" name="day" value="@ViewBag.day" />
+        <input type="submit" value="Wybierz datę" />
+    </p>
+</form>
+
+<a asp-action="Index">Wyczyść filtry wyszukiwania</a>
+<hr />
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <h2>Data: @ViewBag.day</h2>
+</div>
+<hr />
+
+
+<h3>Śniadanie: @ViewBag.breakfast osób</h3>
+<table class="table col-8">
+    <thead>
+        <tr>
+            <th scope="col">Nr. pokoju</th>
+            <th scope="col">Liczba osób</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.breakfastList)
+        {
+            <tr>
+                <td>
+                    @item.Room.RoomNumber
+                </td>
+                <td>
+                    @item.NumberOfPeople
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="Bookings" asp-route-id="@item.Id">Szczegóły</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+<hr />
+
+<h3>Obiadokolacja: @ViewBag.dinner osób</h3>
+<table class="table col-8">
+    <thead>
+        <tr>
+            <th scope="col">Nr. pokoju</th>
+            <th scope="col">Liczba osób</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.dinnerList)
+        {
+            <tr>
+                <td>
+                    @item.Room.RoomNumber
+                </td>
+                <td>
+                    @item.NumberOfPeople
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="Bookings" asp-route-id="@item.Id">Szczegóły</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

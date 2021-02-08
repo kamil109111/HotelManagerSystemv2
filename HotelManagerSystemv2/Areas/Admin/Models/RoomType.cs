@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HotelManagerSystemv2.Areas.Admin.Models
 {
@@ -10,7 +6,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="Podaj nazwę")]
+        [Required(ErrorMessage = "Podaj nazwę")]
         [Display(Name = "Nazwa standardu")]
         public string RoomTypeName { get; set; }
 
@@ -20,7 +16,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Models
         [Display(Name = "Suszarka")]
         public bool Hairdryer { get; set; }
 
-        [Display(Name ="Ręczniki")]
+        [Display(Name = "Ręczniki")]
         public bool Towels { get; set; }
 
         [Display(Name = "Prysznic")]
@@ -34,7 +30,7 @@ namespace HotelManagerSystemv2.Areas.Admin.Models
 
         [Display(Name = "Bidet")]
         public bool Bidet { get; set; }
-        
+
 
         [Display(Name = "Toaleta")]
         public bool Toilet { get; set; }

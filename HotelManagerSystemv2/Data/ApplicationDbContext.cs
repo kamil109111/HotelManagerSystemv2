@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HotelManagerSystemv2.Areas.Employee.Models;
+using HotelManagerSystemv2.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using HotelManagerSystemv2.Models;
-using HotelManagerSystemv2.Areas.Admin.Models;
 using System.Linq;
-using HotelManagerSystemv2.Areas.Employee.Models;
 
 namespace HotelManagerSystemv2.Data
 {
@@ -26,22 +22,22 @@ namespace HotelManagerSystemv2.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            
-        
+
+
             base.OnModelCreating(builder);
-            
+
 
             foreach (var foreignKey in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-                
+
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-            }     
-        
-        
+            }
+
+
             builder.Entity<Booking>()
                 .HasMany(c => c.PaymentList)
                 .WithOne(e => e.Booking);
-        
+
 
         }
     }

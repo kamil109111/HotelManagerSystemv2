@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HotelManagerSystemv2.Areas.Employee.Models;
+using HotelManagerSystemv2.Areas.Employee.ViewModel;
+using HotelManagerSystemv2.Data;
+using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using MimeKit;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HotelManagerSystemv2.Areas.Employee.Models;
-using HotelManagerSystemv2.Data;
-using HotelManagerSystemv2.Areas.Employee.ViewModel;
-using MimeKit;
-using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagerSystemv2.Areas.Employee.Controllers
 {
@@ -36,7 +34,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         {
             return View();
         }
-       
+
 
         [HttpPost]
         public IActionResult SearchResult(SearchRoomViewModel vm)
@@ -46,7 +44,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 return View();
             }
 
-            if (vm.DateFrom >= vm.DateTo )
+            if (vm.DateFrom >= vm.DateTo)
             {
                 return View();
             }
@@ -98,7 +96,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             var booking = from b in _context.Booking.Include(b => b.BookingStatus).Include(b => b.Room.RoomType).Include(b => b.Employee).Include(b => b.PaymentStatus)
                           select b;
 
-           
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 booking = booking.Where(s => s.Name.Contains(searchString) || s.Email.Equals(searchString) || s.Id.ToString().Equals(searchString));
@@ -115,16 +113,6 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             if (!string.IsNullOrEmpty(paymentStatus))
             {
                 booking = booking.Where(x => x.PaymentStatus.PaymentStatusName == paymentStatus);
-            }
-
-            if (!string.IsNullOrEmpty(arrivals))
-            {
-                booking = booking.Where(x => x.FirstDay.Date.ToString() == arrivals);
-            }
-
-            if (!string.IsNullOrEmpty(departure))
-            {
-                booking = booking.Where(x => x.LastDay.Date.ToString() == departure);
             }
 
             if (!string.IsNullOrEmpty(sortOrder))
@@ -150,8 +138,18 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 booking = booking.OrderBy(s => s.FirstDay);
             }
 
+            if (!string.IsNullOrEmpty(arrivals))
+            {
+                booking = _context.Booking.Where(x => x.FirstDay.Date.ToString() == arrivals);
+            }
+
+            if (!string.IsNullOrEmpty(departure))
+            {
+                booking = _context.Booking.Where(x => x.LastDay.Date.ToString() == departure);
+            }
+
             return View(await booking.AsNoTracking().ToListAsync());
-        }       
+        }
 
 
         // GET: Admin/Bookings/Details/5
@@ -173,7 +171,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             }
 
             return View(booking);
-        }             
+        }
 
         [HttpGet]
         public IActionResult Create(int id, DateTime DateFrom, DateTime DateTo, int NoOfPeople, bool Dinner)
@@ -193,24 +191,24 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
 
             if (Dinner == true)
             {
-                booking.TotalPrice = (numberOfDays * RoomPrice) + ((NoOfPeople*20)*numberOfDays); 
+                booking.TotalPrice = (numberOfDays * RoomPrice) + ((NoOfPeople * 20) * numberOfDays);
             }
             else
             {
                 booking.TotalPrice = numberOfDays * RoomPrice;
-            }         
+            }
 
-            var bookingStatuses = _context.BookingStatus.ToList();                     
+            var bookingStatuses = _context.BookingStatus.ToList();
             var employee = _context.Users.ToList();
-            
+
             var viewModel = new BookingViewModel
             {
                 BookingStatuses = bookingStatuses,
-                Employees = employee,                            
+                Employees = employee,
                 Booking = booking
             };
-               return View(viewModel);
-        }        
+            return View(viewModel);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -218,14 +216,14 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
         {
             if (ModelState.IsValid)
             {
-                               
+
 
                 var booking = new Booking
                 {
 
                     FirstDay = bookingvm.Booking.FirstDay,
                     LastDay = bookingvm.Booking.LastDay,
-                    ReservationDate = bookingvm.Booking.ReservationDate,
+                    ReservationDate = DateTime.Now,
                     Name = bookingvm.Booking.Name,
                     Phone = bookingvm.Booking.Phone,
                     Email = bookingvm.Booking.Email,
@@ -238,13 +236,13 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                     BookingStatusId = 1,
                     PaymentStatusId = 1,
                     EmployeeId = bookingvm.Booking.EmployeeId,
-                    RoomId = bookingvm.Booking.RoomId,                   
+                    RoomId = bookingvm.Booking.RoomId,
                     Note = bookingvm.Booking.Note,
-                    
+
                 };
                 _context.Add(booking);
                 _context.SaveChanges();
-                              
+
 
                 return RedirectToAction("SendWelcomeEmail", new RouteValueDictionary(
                 new { action = "SendWelcomeEmail", booking.Id }));
@@ -253,7 +251,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             {
                 return View(bookingvm);
             }
-        }      
+        }
 
         // GET: Admin/Bookings/Edit/5
         [HttpGet]
@@ -273,14 +271,14 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             var rooms = _context.Room.ToList();
 
             var viewModel = new BookingViewModel
-            {                
+            {
                 Booking = booking,
                 BookingStatuses = bookingStatuses,
                 PaymentStatuses = paymentStatuses,
                 Rooms = rooms,
                 Employees = employees
             };
-            
+
 
             return View(viewModel);
         }
@@ -312,8 +310,8 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                     vm.Booking.BookingStatusId = 2;
                 }
 
-                var paymentList = _context.Payment.Where(i => i.BookingId == vm.Booking.Id).ToList();                
-               vm.Booking.PaidInAlready = paymentList.Sum(i => i.Amount);
+                var paymentList = _context.Payment.Where(i => i.BookingId == vm.Booking.Id).ToList();
+                vm.Booking.PaidInAlready = paymentList.Sum(i => i.Amount);
 
                 /*
                 var numberOfDays = vm.Booking.LastDay.Subtract(vm.Booking.FirstDay).TotalDays;
@@ -358,7 +356,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                        new { action = "SendBookingConfirmedEmail", vm.Booking.Id }));
                     }
 
-                    if (((vm.Booking.PaymentStatusId == 3) && (vm.Booking.AllPaid == false)) == true )
+                    if (((vm.Booking.PaymentStatusId == 3) && (vm.Booking.AllPaid == false)) == true)
                     {
                         vm.Booking.AllPaid = true;
                         _context.Update(vm.Booking);
@@ -371,7 +369,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                     if (vm.Booking.BookingStatusId == 4)
                     {
                         return RedirectToAction("SendFarewellEmail", new RouteValueDictionary(
-                       new { action = "SendFarewellEmail", vm.Booking.Id }));                                            
+                       new { action = "SendFarewellEmail", vm.Booking.Id }));
                     }
                 }
                 catch (DbUpdateConcurrencyException)
@@ -407,11 +405,11 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
             vm.BookingStatuses = bookingStatuses;
             vm.PaymentStatuses = paymentStatuses;
             vm.Rooms = rooms;
-            vm.Employees = employees;            
+            vm.Employees = employees;
 
             return View(vm);
         }
-        
+
 
         // GET: Admin/Bookings/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -666,7 +664,7 @@ namespace HotelManagerSystemv2.Areas.Employee.Controllers
                 "Dziękujemy, że wybrałeś nasz hotel. Mamy nadzieję że spełniliśmy twoje oczekiwania. Zapraszamy ponownie w przyszłości \n\n" +
                 "Z poważaniem\n" +
                 "HotelSystemManager");
-                                
+
 
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("HotelSystemManager", "ttest69777@gmail.com"));
