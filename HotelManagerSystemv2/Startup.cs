@@ -43,6 +43,11 @@ namespace HotelManagerSystemv2
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("pl-PL");                
+            });
+
 
             services.AddControllersWithViews();
 
@@ -68,6 +73,13 @@ namespace HotelManagerSystemv2
                 app.UseHsts();
                 */
             }
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                await next();
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
