@@ -151,7 +151,7 @@ namespace HotelManagerSystemv2.Controllers
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("ttest69777@gmail.com", "Qwerty12345!");
+                client.Authenticate("ttest69777", "Qwerty12345!");
                 client.Send(message);
 
                 client.Disconnect(true);
