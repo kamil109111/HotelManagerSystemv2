@@ -26,7 +26,12 @@ As an Administrator you can:
 * manage user accounts
 
 ## Screenshots
-![](./HotelManagerSystemv2/wwwroot/Images/Beztytułu.jpg)
 
+Room availability form
+![Room availability](HotelManagerSystemv2/wwwroot/Images/Avaform.jpg)
 
+Employee menu
+![Room availability](HotelManagerSystemv2/wwwroot/Images/Employ.jpg)
 
+Admin menu
+![Room availability](HotelManagerSystemv2/wwwroot/Images/admin.jpg)
