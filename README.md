@@ -26,7 +26,7 @@ As an Administrator you can:
 * manage user accounts
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![](./HotelManagerSystemv2/wwwroot/Images/Beztytułu.jpg)
 
 
 
