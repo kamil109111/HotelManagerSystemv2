@@ -1,18 +1,18 @@
 # Hotel System Manager
-Projekt systemu hotelowego ASP.NET Core
 
-## Table of contents
-* [General info](#general-info)
-* [Screenshots](#screenshots)
-* [Technologies](#technologies)
-* [Setup](#setup)
-* [Features](#features)
-* [Status](#status)
-* [Inspiration](#inspiration)
-* [Contact](#contact)
+Hotel System Manager is web app developed for managing various activities in hotel.
 
 ## General info
-Add more general information about project. What the purpose of the project is? Motivation?
+
+Application contains two parts. First part is for guests and the second part is for hotel employees and administrators.
+
+## Features
+List of features 
+
+As a Guest you can:
+* 
+* Awesome feature 2
+* Awesome feature 3
 
 ## Screenshots
 ![Example screenshot](./img/screenshot.png)
@@ -22,28 +22,9 @@ Add more general information about project. What the purpose of the project is? 
 * Tech 2 - version 2.0
 * Tech 3 - version 3.0
 
-## Setup
-Describe how to install / setup your local environement / add link to demo version.
-
-## Code Examples
-Show examples of usage:
-`put-your-code-here`
-
 ## Features
 List of features ready and TODOs for future development
 * Awesome feature 1
 * Awesome feature 2
 * Awesome feature 3
 
-To-do list:
-* Wow improvement to be done 1
-* Wow improvement to be done 2
-
-## Status
-Project is: _in progress_, _finished_, _no longer continue_ and why?
-
-## Inspiration
-Add here credits. Project inspired by..., based on...
-
-## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
