@@ -1,7 +1,5 @@
-# HotelManagerSystemv2
+# Hotel System Manager
 Projekt systemu hotelowego ASP.NET Core
-# Project Name
-> Here goes your awesome project description!
 
 ## Table of contents
 * [General info](#general-info)
